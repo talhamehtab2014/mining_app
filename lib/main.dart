@@ -22,5 +22,5 @@ void main() {
     );
     await ScreenUtil.ensureScreenSize();
     runApp(const MyApp());
-  }, (exception, stack) {});
+  }, (exception, stack) {},);
 }
