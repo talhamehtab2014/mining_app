@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:mining_application/src/core/localization/app_translations.dart';
-import 'package:mining_application/src/core/resource/r.dart';
-import 'package:mining_application/src/core/utils/routes.dart';
 import 'package:flutter_localizations/flutter_localizations.dart'
     show
         GlobalMaterialLocalizations,
         GlobalWidgetsLocalizations,
         GlobalCupertinoLocalizations;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:mining_application/src/core/helper/dependencies.dart';
+import 'package:mining_application/src/core/localization/app_translations.dart';
+import 'package:mining_application/src/core/resource/r.dart';
+import 'package:mining_application/src/core/utils/routes.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -54,6 +55,6 @@ class _MyAppState extends State<MyApp> {
     theme: R.themeData,
     themeMode: ThemeMode.light,
     smartManagement: SmartManagement.full,
-    // initialBinding: InitialBinding(),
+    initialBinding: GlobalDependencies(),
   );
 }
