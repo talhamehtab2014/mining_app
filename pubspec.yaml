@@ -43,6 +43,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   get: ^4.7.2
   flutter_localization: ^0.3.3
+  firebase_core: ^4.2.0
 
 dev_dependencies:
   flutter_test:

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1080476079769",
+    "project_id": "audigi-pay",
+    "storage_bucket": "audigi-pay.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080476079769:android:f9e24ebf1d87bf74790a08",
+        "android_client_info": {
+          "package_name": "com.example.mining_application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiGxctN6kcMtmSoAkE9wd2mwf-y0OkGyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
