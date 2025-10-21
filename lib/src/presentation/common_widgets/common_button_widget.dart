@@ -17,6 +17,7 @@ class ButtonWithRadiusWidget extends StatelessWidget {
   final VoidCallback callback;
   final bool isDisabled;
   final InteractiveInkFeatureFactory? splashFactory;
+  final Widget? iconWidget;
   final Color? disabledBackColor; // Custom color for disabled state
   final Color? disabledOverlayColor; // Custom overlay color for disabled state
   final Color? disabledTextColor; // Custom overlay color for disabled state
@@ -28,7 +29,7 @@ class ButtonWithRadiusWidget extends StatelessWidget {
     this.overlayColor = Colors.white,
     this.backColor,
     this.width = double.maxFinite,
-    this.height = 48,
+    this.height = 40,
     this.textStyle,
     this.splashFactory,
     this.enableShadow = true,
@@ -37,6 +38,7 @@ class ButtonWithRadiusWidget extends StatelessWidget {
     this.disabledBackColor,
     this.disabledOverlayColor,
     this.disabledTextColor,
+    this.iconWidget,
   });
 
   @override
@@ -73,17 +75,24 @@ class ButtonWithRadiusWidget extends StatelessWidget {
           fixedSize: MaterialStateProperty.all(Size(width, height)),
         ),
         onPressed: !isDisabled ? (() => callback()) : null,
-        child: AutoSizeText(
-          buttonTitle,
-          style:
-              textStyle ??
-              GoogleFonts.poppins(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-                fontSize: 14.sp,
-              ),
-          textAlign: TextAlign.center,
-          maxLines: 1,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (iconWidget != null) iconWidget!,
+            8.horizontalSpace,
+            AutoSizeText(
+              buttonTitle,
+              style:
+                  textStyle ??
+                  GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12.sp,
+                  ),
+              textAlign: TextAlign.center,
+              maxLines: 1,
+            ),
+          ],
         ),
       ),
     );

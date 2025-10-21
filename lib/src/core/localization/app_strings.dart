@@ -20,7 +20,23 @@ class AppStrings {
   static String get loginWithEmail => 'loginWithEmail'.tr;
 
   static String get consent => 'consent'.tr;
+
   static String get orContinueWith => 'orContinueWith'.tr;
+
   static String get google => 'google'.tr;
+
   static String get phone => 'phone'.tr;
+
+  static String get name => 'name'.tr;
+
+  static String get nameHint => 'nameHint'.tr;
+
+  static String get phoneOptional => 'phoneOptional'.tr;
+
+  static String get phoneOptionalHint => 'phoneOptionalHint'.tr;
+
+  static String get referral => 'referral'.tr;
+
+  static String get referralHint => 'referralHint'.tr;
+  static String get signUpWithEmail => 'signUpWithEmail'.tr;
 }

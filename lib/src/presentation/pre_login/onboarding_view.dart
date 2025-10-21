@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:mining_application/src/core/enum/enums.dart';
 import 'package:mining_application/src/core/localization/app_strings.dart';
@@ -19,145 +20,149 @@ class OnboardingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SizedBox(
-          width: Get.width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CommonLabelTextWidget(
-                text: AppStrings.title,
-                fontWeight: FontWeight.w600,
-                fontSize: 28.sp,
-                textColor: R.palette.primary,
-              ),
-              6.verticalSpace,
-              CommonLabelTextWidget(
-                text: AppStrings.subtitleOnboarding,
-                fontWeight: FontWeight.w600,
-                fontSize: 16.sp,
-                textColor: R.palette.primary,
-              ),
-              Spacer(),
-              Container(
-                padding: EdgeInsets.all(16.w),
-                margin: EdgeInsets.all(16.w),
-                decoration: BoxDecoration(
-                  color: R.palette.cardBackground,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: GetBuilder<OnboardingViewModel>(
-                  builder: (controller) {
-                    return controller.state.maybeWhen(
-                      updateState: (state) {
-                        return Column(
-                          children: [
-                            Row(
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [
+            R.palette.yellow900,
+            R.palette.yellow800,
+          ],
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: SizedBox(
+            width: Get.width,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  22.verticalSpace,
+                  CommonLabelTextWidget(
+                    text: AppStrings.title,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 22.sp,
+                    textColor: R.palette.primary,
+                  ),
+                  6.verticalSpace,
+                  CommonLabelTextWidget(
+                    text: AppStrings.subtitleOnboarding,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.sp,
+                    textColor: R.palette.primary,
+                  ),
+
+                  Container(
+                    padding: EdgeInsets.all(16.w),
+                    margin: EdgeInsets.all(16.w),
+                    decoration: BoxDecoration(
+                      color: R.palette.cardBackground,
+                      borderRadius: BorderRadius.circular(12.r),
+                    ),
+                    child: GetBuilder<OnboardingViewModel>(
+                      builder: (controller) {
+                        return controller.state.maybeWhen(
+                          updateState: (state) {
+                            return Column(
                               children: [
-                                _buildTabButton(
-                                  title: AppStrings.login,
-                                  isSelected:
-                                      state == OnboardingStateEnum.login,
-                                  onTap: () {
-                                    controller.onAction(
-                                      OnboardingAction.login(),
-                                    );
-                                  },
+                                Row(
+                                  children: [
+                                    _buildTabButton(
+                                      title: AppStrings.login,
+                                      isSelected:
+                                          state == OnboardingStateEnum.login,
+                                      onTap: () {
+                                        controller.onAction(
+                                          OnboardingAction.login(),
+                                        );
+                                      },
+                                    ),
+                                    8.horizontalSpace,
+                                    _buildTabButton(
+                                      title: AppStrings.signup,
+                                      isSelected:
+                                          state == OnboardingStateEnum.signup,
+                                      onTap: () {
+                                        controller.onAction(
+                                          OnboardingAction.signup(),
+                                        );
+                                      },
+                                    ),
+                                  ],
                                 ),
-                                8.horizontalSpace,
-                                _buildTabButton(
-                                  title: AppStrings.signup,
-                                  isSelected:
-                                      state == OnboardingStateEnum.signup,
-                                  onTap: () {
-                                    controller.onAction(
-                                      OnboardingAction.signup(),
-                                    );
-                                  },
+                                18.verticalSpace,
+                                state == OnboardingStateEnum.login
+                                    ? loginTabWidget()
+                                    : signUpTabWidget(),
+                                16.verticalSpace,
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        height: 1,
+                                        color: R.palette.borderOrDivider,
+                                      ),
+                                    ),
+                                    CommonLabelTextWidget(
+                                      text: AppStrings.orContinueWith,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12.sp,
+                                      textColor: R.palette.primary,
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        height: 1,
+                                        color: R.palette.borderOrDivider,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                16.verticalSpace,
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: ButtonWithRadiusWidget(
+                                        buttonTitle: AppStrings.google,
+                                        callback: () {},
+                                        borderRadius: 10.r,
+                                        iconWidget:  FaIcon(FontAwesomeIcons.google, size: 16,),
+                                      ),
+                                    ),
+                                    8.horizontalSpace,
+                                    Expanded(
+                                      child: ButtonWithRadiusWidget(
+                                        buttonTitle: AppStrings.phone,
+                                        callback: () {},
+                                        borderRadius: 10.r,
+                                        iconWidget:  FaIcon(FontAwesomeIcons.phone, size: 16,),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
-                            ),
-                            8.verticalSpace,
-                            CommonTextFieldWidget(
-                              labelText: AppStrings.emailLabel,
-                              controller: TextEditingController(),
-                              hintText: AppStrings.emailHint,
-                            ),
-                            6.verticalSpace,
-                            CommonTextFieldWidget(
-                              labelText: AppStrings.passwordLabel,
-                              controller: TextEditingController(),
-                              hintText: AppStrings.passwordHint,
-                            ),
-                            6.verticalSpace,
-                            ButtonWithRadiusWidget(
-                              buttonTitle: AppStrings.loginWithEmail,
-                              callback: () {},
-                              borderRadius: 10.r,
-                            ),
-                            16.verticalSpace,
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    height: 1,
-                                    color: R.palette.borderOrDivider,
-                                  ),
-                                ),
-                                CommonLabelTextWidget(
-                                  text: AppStrings.orContinueWith,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16.sp,
-                                  textColor: R.palette.primary,
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    height: 1,
-                                    color: R.palette.borderOrDivider,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            16.verticalSpace,
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: ButtonWithRadiusWidget(
-                                    buttonTitle: AppStrings.google,
-                                    callback: () {},
-                                    borderRadius: 10.r,
-                                  ),
-                                ),
-                                8.horizontalSpace,
-                                Expanded(
-                                  child: ButtonWithRadiusWidget(
-                                    buttonTitle: AppStrings.phone,
-                                    callback: () {},
-                                    borderRadius: 10.r,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                            );
+                          },
+                          orElse: () {
+                            return Container();
+                          },
                         );
                       },
-                      orElse: () {
-                        return Container();
-                      },
-                    );
-                  },
-                ),
-              ),
-              Spacer(),
-              CommonLabelTextWidget(
-                text: AppStrings.consent,
-                fontWeight: FontWeight.w600,
-                fontSize: 12.sp,
-                textColor: R.palette.primary,
-              ),
-            ],
-          ).marginOnly(bottom: 24.h),
+                    ),
+                  ),
+
+                  CommonLabelTextWidget(
+                    text: AppStrings.consent,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12.sp,
+                    textColor: R.palette.primary,
+                  ),
+                ],
+              ).marginOnly(bottom: 16.h),
+            ),
+          ),
         ),
       ),
     );
@@ -173,22 +178,92 @@ class OnboardingView extends StatelessWidget {
         onTap: onTap,
         child: Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.symmetric(vertical: 12.h),
+          padding: EdgeInsets.symmetric(vertical: 8.h),
           decoration: BoxDecoration(
             color: isSelected ? R.palette.primary : R.palette.transparent,
-            borderRadius: BorderRadius.circular(10.r),
+            borderRadius: BorderRadius.circular(6.r),
             border: Border.all(
               color: isSelected ? R.palette.primary : R.palette.borderOrDivider,
             ),
           ),
           child: CommonLabelTextWidget(
             text: title,
-            fontWeight: FontWeight.w600,
-            fontSize: 16.sp,
+            fontWeight: FontWeight.w500,
+            fontSize: 14.sp,
             textColor: isSelected ? R.palette.blackColor : R.palette.white,
           ),
         ),
       ),
+    );
+  }
+
+  Widget loginTabWidget() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CommonTextFieldWidget(
+          labelText: AppStrings.emailLabel,
+          controller: TextEditingController(),
+          hintText: AppStrings.emailHint,
+        ),
+        12.verticalSpace,
+        CommonTextFieldWidget(
+          labelText: AppStrings.passwordLabel,
+          controller: TextEditingController(),
+          hintText: AppStrings.passwordHint,
+        ),
+        8.verticalSpace,
+        ButtonWithRadiusWidget(
+          buttonTitle: AppStrings.loginWithEmail,
+          callback: () {},
+          borderRadius: 8.r,
+         iconWidget:  FaIcon(FontAwesomeIcons.envelope),
+        ),
+      ],
+    );
+  }
+
+  Widget signUpTabWidget() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CommonTextFieldWidget(
+          labelText: AppStrings.name,
+          controller: TextEditingController(),
+          hintText: AppStrings.nameHint,
+        ),
+        12.verticalSpace,
+        CommonTextFieldWidget(
+          labelText: AppStrings.emailLabel,
+          controller: TextEditingController(),
+          hintText: AppStrings.emailHint,
+        ),
+        12.verticalSpace,
+        CommonTextFieldWidget(
+          labelText: AppStrings.passwordLabel,
+          controller: TextEditingController(),
+          hintText: AppStrings.passwordHint,
+        ),
+        16.verticalSpace,
+        CommonTextFieldWidget(
+          labelText: AppStrings.phoneOptional,
+          controller: TextEditingController(),
+          hintText: AppStrings.phoneOptionalHint,
+          keyboardType: TextInputType.phone,
+        ),
+        12.verticalSpace,
+        CommonTextFieldWidget(
+          labelText: AppStrings.referral,
+          controller: TextEditingController(),
+          hintText: AppStrings.referralHint,
+        ),
+        8.verticalSpace,
+        ButtonWithRadiusWidget(
+          buttonTitle: AppStrings.signUpWithEmail,
+          callback: () {},
+          borderRadius: 10.r,
+        ),
+      ],
     );
   }
 }
