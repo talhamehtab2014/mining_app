@@ -1,1 +1,15 @@
-final Map<String, String> enUS = {};
+final Map<String, String> enUS = {
+  'title': 'AU GOLD',
+  'subtitleOnboarding': 'Mine digital gold, build your fortune',
+  'login': 'Login',
+  'signup': 'Sign Up',
+  'emailLabel': 'Email',
+  'emailHint': 'Enter your email',
+  'passwordLabel': 'Password',
+  'passwordHint': 'Enter password',
+  'loginWithEmail': 'Login with email',
+  'consent': 'By continuing, you agree to our Terms & Privacy Policy',
+  'orContinueWith': 'Or continue with',
+  'google': 'Google',
+  'phone': 'Phone',
+};

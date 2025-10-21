@@ -16,10 +16,12 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:logger/web.dart' as _i120;
 import 'package:mining_application/src/core/base_env/base_env.dart' as _i157;
 import 'package:mining_application/src/core/di/module_injector.dart' as _i890;
+import 'package:mining_application/src/core/parser/baseurl_parser.dart'
+    as _i832;
+import 'package:mining_application/src/core/services/network/network_constants.dart'
+    as _i356;
 import 'package:mining_application/src/core/services/network/pretty_dio_logger.dart'
     as _i766;
-import 'package:mining_application/src/core/services/network/network_constants.dart'
-    as _i0;
 import 'package:mining_application/src/core/utils/constants.dart' as _i138;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
@@ -43,11 +45,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i895.Connectivity>(() => modulesInjector.connectivity);
     gh.lazySingleton<_i138.Constants>(() => _i138.Constants());
-    gh.lazySingleton<_i0.NetworkConstants>(
-      () => _i0.NetworkConstants(gh<_i157.BaseEnv>()),
+    gh.lazySingleton<_i356.NetworkConstants>(
+      () => _i356.NetworkConstants(gh<_i157.BaseEnv>()),
     );
     gh.lazySingleton<_i361.Dio>(
-      () => dioInjector.dio(gh<_i0.NetworkConstants>()),
+      () => dioInjector.dio(gh<_i356.NetworkConstants>()),
+    );
+    gh.lazySingleton<_i832.BaseUrlParser>(
+      () => _i832.BaseUrlParser(gh<_i356.NetworkConstants>()),
     );
     return this;
   }

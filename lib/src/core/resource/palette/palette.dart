@@ -3,7 +3,7 @@ part of '../r.dart';
 class Palette {
   Palette._();
 
-  static const _primary = Color(0xff0083CA);
+  static const _primary = Color(0xffFF9B00);
   static const _darkBlue = Color(0xff0063B4);
   static const _black29 = Color(0xff292929);
   static const _black = Color(0xff222222);
@@ -20,6 +20,8 @@ class Palette {
   static const _lightGrayColor = Color(0xFFFAFAFA);
   static const _disableButtonColor = Color(0xFF65899D);
   static const _dialogBackground = Color(0xFF424242);
+  static const _cardBackground = Color(0xFF5A2504);
+  static const _borderOrDivider = Color(0xFF7B4500);
 
   Color get transparent => _transparent;
 
@@ -27,7 +29,7 @@ class Palette {
 
   Color get background => _lightGrey;
 
-  Color get cardBackground => _black29;
+  Color get cardBackground => _cardBackground;
 
   Color get iconColor => _white;
 
@@ -64,4 +66,6 @@ class Palette {
   Color get disableButtonColor => _disableButtonColor;
 
   Color get dialogBackground => _dialogBackground;
+
+  Color get borderOrDivider => _borderOrDivider;
 }
