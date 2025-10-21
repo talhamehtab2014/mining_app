@@ -9,6 +9,7 @@ class CommonTextFieldWidget extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   final TextInputType keyboardType;
+  final bool isPassword;
 
   const CommonTextFieldWidget({
     super.key,
@@ -16,6 +17,7 @@ class CommonTextFieldWidget extends StatelessWidget {
     required this.controller,
     this.hintText = '',
     this.keyboardType = TextInputType.text,
+    this.isPassword = false,
   });
 
   @override
@@ -47,6 +49,7 @@ class CommonTextFieldWidget extends StatelessWidget {
               color: R.palette.primary,
             ),
             keyboardType: keyboardType,
+            obscureText: isPassword,
             decoration: InputDecoration(
               border: InputBorder.none,
               isDense: true,

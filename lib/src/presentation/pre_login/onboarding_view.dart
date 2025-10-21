@@ -25,10 +25,7 @@ class OnboardingView extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
-          colors: [
-            R.palette.yellow900,
-            R.palette.yellow800,
-          ],
+          colors: [R.palette.yellow900, R.palette.yellow800],
         ),
       ),
       child: Scaffold(
@@ -59,7 +56,7 @@ class OnboardingView extends StatelessWidget {
                     padding: EdgeInsets.all(16.w),
                     margin: EdgeInsets.all(16.w),
                     decoration: BoxDecoration(
-                      color: R.palette.cardBackground,
+                      color: R.palette.cardBackground.withAlpha(150),
                       borderRadius: BorderRadius.circular(12.r),
                     ),
                     child: GetBuilder<OnboardingViewModel>(
@@ -127,8 +124,11 @@ class OnboardingView extends StatelessWidget {
                                       child: ButtonWithRadiusWidget(
                                         buttonTitle: AppStrings.google,
                                         callback: () {},
-                                        borderRadius: 10.r,
-                                        iconWidget:  FaIcon(FontAwesomeIcons.google, size: 16,),
+                                        borderRadius: 6.r,
+                                        iconWidget: FaIcon(
+                                          FontAwesomeIcons.google,
+                                          size: 16,
+                                        ),
                                       ),
                                     ),
                                     8.horizontalSpace,
@@ -136,8 +136,11 @@ class OnboardingView extends StatelessWidget {
                                       child: ButtonWithRadiusWidget(
                                         buttonTitle: AppStrings.phone,
                                         callback: () {},
-                                        borderRadius: 10.r,
-                                        iconWidget:  FaIcon(FontAwesomeIcons.phone, size: 16,),
+                                        borderRadius: 6.r,
+                                        iconWidget: FaIcon(
+                                          FontAwesomeIcons.phone,
+                                          size: 16,
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -211,13 +214,14 @@ class OnboardingView extends StatelessWidget {
           labelText: AppStrings.passwordLabel,
           controller: TextEditingController(),
           hintText: AppStrings.passwordHint,
+          isPassword: true,
         ),
         8.verticalSpace,
         ButtonWithRadiusWidget(
           buttonTitle: AppStrings.loginWithEmail,
           callback: () {},
-          borderRadius: 8.r,
-         iconWidget:  FaIcon(FontAwesomeIcons.envelope),
+          borderRadius: 6.r,
+          iconWidget: FaIcon(FontAwesomeIcons.envelope),
         ),
       ],
     );
@@ -243,6 +247,7 @@ class OnboardingView extends StatelessWidget {
           labelText: AppStrings.passwordLabel,
           controller: TextEditingController(),
           hintText: AppStrings.passwordHint,
+          isPassword: true,
         ),
         16.verticalSpace,
         CommonTextFieldWidget(
@@ -261,7 +266,8 @@ class OnboardingView extends StatelessWidget {
         ButtonWithRadiusWidget(
           buttonTitle: AppStrings.signUpWithEmail,
           callback: () {},
-          borderRadius: 10.r,
+          borderRadius: 6.r,
+          iconWidget: FaIcon(FontAwesomeIcons.envelope),
         ),
       ],
     );

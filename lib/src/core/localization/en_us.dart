@@ -17,6 +17,6 @@ final Map<String, String> enUS = {
   'nameHint':" Enter your name",
   'phoneOptional': "Phone (Optional)",
   'phoneOptionalHint': "Enter your phone number",
-  'referral': "Referral",
+  'referral': "Referral code (Optional)",
   'referralHint': "Enter referral code",
 };
