@@ -73,7 +73,7 @@ class OnboardingView extends StatelessWidget {
                                           state == OnboardingStateEnum.login,
                                       onTap: () {
                                         controller.onAction(
-                                          OnboardingAction.login(),
+                                          OnboardingAction.loginRadioButton(),
                                         );
                                       },
                                     ),
@@ -84,7 +84,7 @@ class OnboardingView extends StatelessWidget {
                                           state == OnboardingStateEnum.signup,
                                       onTap: () {
                                         controller.onAction(
-                                          OnboardingAction.signup(),
+                                          OnboardingAction.signupRadioButton(),
                                         );
                                       },
                                     ),
@@ -92,8 +92,8 @@ class OnboardingView extends StatelessWidget {
                                 ),
                                 18.verticalSpace,
                                 state == OnboardingStateEnum.login
-                                    ? loginTabWidget()
-                                    : signUpTabWidget(),
+                                    ? loginTabWidget(controller)
+                                    : signUpTabWidget(controller),
                                 16.verticalSpace,
                                 Row(
                                   children: [
@@ -200,7 +200,7 @@ class OnboardingView extends StatelessWidget {
     );
   }
 
-  Widget loginTabWidget() {
+  Widget loginTabWidget(OnboardingViewModel controller) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -227,7 +227,7 @@ class OnboardingView extends StatelessWidget {
     );
   }
 
-  Widget signUpTabWidget() {
+  Widget signUpTabWidget(OnboardingViewModel controller) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -265,7 +265,9 @@ class OnboardingView extends StatelessWidget {
         8.verticalSpace,
         ButtonWithRadiusWidget(
           buttonTitle: AppStrings.signUpWithEmail,
-          callback: () {},
+          callback: () {
+            controller.onAction(OnboardingAction.signUpWithEmail());
+          },
           borderRadius: 6.r,
           iconWidget: FaIcon(FontAwesomeIcons.envelope),
         ),

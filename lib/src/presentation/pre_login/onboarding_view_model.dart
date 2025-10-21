@@ -6,7 +6,9 @@ import 'package:mining_application/src/presentation/pre_login/models/state/onboa
 class OnboardingViewModel extends GetxController {
   final String title = "Onboarding View Model";
 
-  OnBoardingState _state = OnBoardingState.updateState(OnboardingStateEnum.login);
+  OnBoardingState _state = OnBoardingState.updateState(
+    OnboardingStateEnum.login,
+  );
 
   OnBoardingState get state => _state;
 
@@ -19,20 +21,18 @@ class OnboardingViewModel extends GetxController {
 
   onAction(OnboardingAction action) {
     action.when(
-      login: () {
-        _state = state.copyWith(
-          state: OnboardingStateEnum.login,
-        );
+      loginRadioButton: () {
+        _state = state.copyWith(state: OnboardingStateEnum.login);
         update();
       },
-      signup: () {
-        _state = state.copyWith(
-          state: OnboardingStateEnum.signup,
-        );
+      signupRadioButton: () {
+        _state = state.copyWith(state: OnboardingStateEnum.signup);
         update();
       },
       loginWithGoogle: () {},
       loginWithPhone: () {},
+      signupWithEmail: () {},
+      loginWithEmail: () {},
     );
   }
 }
