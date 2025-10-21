@@ -123,7 +123,11 @@ class OnboardingView extends StatelessWidget {
                                     Expanded(
                                       child: ButtonWithRadiusWidget(
                                         buttonTitle: AppStrings.google,
-                                        callback: () {},
+                                        callback: () {
+                                          controller.onAction(
+                                            OnboardingAction.loginWithGoogle(),
+                                          );
+                                        },
                                         borderRadius: 6.r,
                                         iconWidget: FaIcon(
                                           FontAwesomeIcons.google,
@@ -135,7 +139,11 @@ class OnboardingView extends StatelessWidget {
                                     Expanded(
                                       child: ButtonWithRadiusWidget(
                                         buttonTitle: AppStrings.phone,
-                                        callback: () {},
+                                        callback: () {
+                                          controller.onAction(
+                                            OnboardingAction.loginWithPhone(),
+                                          );
+                                        },
                                         borderRadius: 6.r,
                                         iconWidget: FaIcon(
                                           FontAwesomeIcons.phone,
@@ -183,7 +191,7 @@ class OnboardingView extends StatelessWidget {
           alignment: Alignment.center,
           padding: EdgeInsets.symmetric(vertical: 8.h),
           decoration: BoxDecoration(
-            color: isSelected ? R.palette.primary : R.palette.transparent,
+            color: isSelected ? R.palette.primary : R.palette.cardBackground,
             borderRadius: BorderRadius.circular(6.r),
             border: Border.all(
               color: isSelected ? R.palette.primary : R.palette.borderOrDivider,
@@ -219,7 +227,9 @@ class OnboardingView extends StatelessWidget {
         8.verticalSpace,
         ButtonWithRadiusWidget(
           buttonTitle: AppStrings.loginWithEmail,
-          callback: () {},
+          callback: () {
+            controller.onAction(OnboardingAction.loginWithEmail());
+          },
           borderRadius: 6.r,
           iconWidget: FaIcon(FontAwesomeIcons.envelope),
         ),
@@ -266,7 +276,7 @@ class OnboardingView extends StatelessWidget {
         ButtonWithRadiusWidget(
           buttonTitle: AppStrings.signUpWithEmail,
           callback: () {
-            controller.onAction(OnboardingAction.signUpWithEmail());
+            controller.onAction(OnboardingAction.signupWithEmail());
           },
           borderRadius: 6.r,
           iconWidget: FaIcon(FontAwesomeIcons.envelope),

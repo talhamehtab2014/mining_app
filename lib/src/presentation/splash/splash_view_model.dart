@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
+import 'package:mining_application/src/core/localization/app_strings.dart';
 import 'package:mining_application/src/core/utils/routes.dart';
 
 class SplashViewModel extends GetxController {
-  String title = "AU Gold";
+  String title = AppStrings.title;
 
   @override
   void onInit() async {

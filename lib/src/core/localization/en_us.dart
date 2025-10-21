@@ -1,5 +1,5 @@
 final Map<String, String> enUS = {
-  'title': 'AU GOLD',
+  'title': 'AU Mining',
   'subtitleOnboarding': 'Mine digital gold, build your fortune',
   'login': 'Login',
   'signup': 'Sign Up',

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:mining_application/src/core/enum/enums.dart';
+import 'package:mining_application/src/core/utils/routes.dart';
 import 'package:mining_application/src/presentation/pre_login/models/actions/onboarding_action.dart';
 import 'package:mining_application/src/presentation/pre_login/models/state/onboarding_state.dart';
 
@@ -29,10 +30,18 @@ class OnboardingViewModel extends GetxController {
         _state = state.copyWith(state: OnboardingStateEnum.signup);
         update();
       },
-      loginWithGoogle: () {},
-      loginWithPhone: () {},
-      signupWithEmail: () {},
-      loginWithEmail: () {},
+      loginWithGoogle: () {
+        Get.offAndToNamed(Routes().getBottomNavigationPage());
+      },
+      loginWithPhone: () {
+        Get.offAndToNamed(Routes().getBottomNavigationPage());
+      },
+      signupWithEmail: () {
+        Get.offAndToNamed(Routes().getBottomNavigationPage());
+      },
+      loginWithEmail: () {
+        Get.offAndToNamed(Routes().getBottomNavigationPage());
+      },
     );
   }
 }
