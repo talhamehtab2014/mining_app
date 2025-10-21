@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CommonLabelTextWidget extends StatelessWidget {
   String text;
@@ -36,10 +37,9 @@ class CommonLabelTextWidget extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         textDirection: textDirection,
         maxLines: maxLines,
-        style: TextStyle(
+        style: GoogleFonts.poppins(
           fontSize: fontSize,
           fontWeight: fontWeight,
-          fontFamily: fontFamily,
           color: textColor,
           height: textHeight,
           decoration: TextDecoration.none,
