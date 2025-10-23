@@ -20,158 +20,164 @@ class OnboardingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [R.palette.yellow900, R.palette.yellow800],
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [R.palette.yellow900, R.palette.yellow800],
+          ),
         ),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SafeArea(
-          child: SizedBox(
-            width: Get.width,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  22.verticalSpace,
-                  CommonLabelTextWidget(
-                    text: AppStrings.title,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 22.sp,
-                    textColor: R.palette.primary,
-                  ),
-                  6.verticalSpace,
-                  CommonLabelTextWidget(
-                    text: AppStrings.subtitleOnboarding,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14.sp,
-                    textColor: R.palette.primary,
-                  ),
-
-                  Container(
-                    padding: EdgeInsets.all(16.w),
-                    margin: EdgeInsets.all(16.w),
-                    decoration: BoxDecoration(
-                      color: R.palette.cardBackground.withAlpha(150),
-                      borderRadius: BorderRadius.circular(12.r),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: SizedBox(
+              width: Get.width,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    22.verticalSpace,
+                    CommonLabelTextWidget(
+                      text: AppStrings.title,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 22.sp,
+                      textColor: R.palette.primary,
                     ),
-                    child: GetBuilder<OnboardingViewModel>(
-                      builder: (controller) {
-                        return controller.state.maybeWhen(
-                          updateState: (state) {
-                            return Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    _buildTabButton(
-                                      title: AppStrings.login,
-                                      isSelected:
-                                          state == OnboardingStateEnum.login,
-                                      onTap: () {
-                                        controller.onAction(
-                                          OnboardingAction.loginRadioButton(),
-                                        );
-                                      },
-                                    ),
-                                    8.horizontalSpace,
-                                    _buildTabButton(
-                                      title: AppStrings.signup,
-                                      isSelected:
-                                          state == OnboardingStateEnum.signup,
-                                      onTap: () {
-                                        controller.onAction(
-                                          OnboardingAction.signupRadioButton(),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                18.verticalSpace,
-                                state == OnboardingStateEnum.login
-                                    ? loginTabWidget(controller)
-                                    : signUpTabWidget(controller),
-                                16.verticalSpace,
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        height: 1,
-                                        color: R.palette.borderOrDivider,
-                                      ),
-                                    ),
-                                    CommonLabelTextWidget(
-                                      text: AppStrings.orContinueWith,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12.sp,
-                                      textColor: R.palette.primary,
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        height: 1,
-                                        color: R.palette.borderOrDivider,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                16.verticalSpace,
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: ButtonWithRadiusWidget(
-                                        buttonTitle: AppStrings.google,
-                                        callback: () {
+                    6.verticalSpace,
+                    CommonLabelTextWidget(
+                      text: AppStrings.subtitleOnboarding,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.sp,
+                      textColor: R.palette.primary,
+                    ),
+
+                    Container(
+                      padding: EdgeInsets.all(16.w),
+                      margin: EdgeInsets.all(16.w),
+                      decoration: BoxDecoration(
+                        color: R.palette.cardBackground.withAlpha(150),
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: GetBuilder<OnboardingViewModel>(
+                        builder: (controller) {
+                          return controller.state.maybeWhen(
+                            updateState: (state) {
+                              return Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      _buildTabButton(
+                                        title: AppStrings.login,
+                                        isSelected:
+                                            state == OnboardingStateEnum.login,
+                                        onTap: () {
                                           controller.onAction(
-                                            OnboardingAction.loginWithGoogle(),
+                                            OnboardingAction.loginRadioButton(),
                                           );
                                         },
-                                        borderRadius: 6.r,
-                                        iconWidget: FaIcon(
-                                          FontAwesomeIcons.google,
-                                          size: 16,
-                                        ),
                                       ),
-                                    ),
-                                    8.horizontalSpace,
-                                    Expanded(
-                                      child: ButtonWithRadiusWidget(
-                                        buttonTitle: AppStrings.phone,
-                                        callback: () {
+                                      8.horizontalSpace,
+                                      _buildTabButton(
+                                        title: AppStrings.signup,
+                                        isSelected:
+                                            state == OnboardingStateEnum.signup,
+                                        onTap: () {
                                           controller.onAction(
-                                            OnboardingAction.loginWithPhone(),
+                                            OnboardingAction.signupRadioButton(),
                                           );
                                         },
-                                        borderRadius: 6.r,
-                                        iconWidget: FaIcon(
-                                          FontAwesomeIcons.phone,
-                                          size: 16,
+                                      ),
+                                    ],
+                                  ),
+                                  18.verticalSpace,
+                                  state == OnboardingStateEnum.login
+                                      ? loginTabWidget(controller)
+                                      : signUpTabWidget(controller),
+                                  16.verticalSpace,
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          height: 1,
+                                          color: R.palette.borderOrDivider,
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            );
-                          },
-                          orElse: () {
-                            return Container();
-                          },
-                        );
-                      },
+                                      CommonLabelTextWidget(
+                                        text: AppStrings.orContinueWith,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12.sp,
+                                        textColor: R.palette.primary,
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          height: 1,
+                                          color: R.palette.borderOrDivider,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  16.verticalSpace,
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: ButtonWithRadiusWidget(
+                                          buttonTitle: AppStrings.google,
+                                          callback: () {
+                                            controller.onAction(
+                                              OnboardingAction.loginWithGoogle(),
+                                            );
+                                          },
+                                          borderRadius: 6.r,
+                                          iconWidget: FaIcon(
+                                            FontAwesomeIcons.google,
+                                            size: 16,
+                                          ),
+                                        ),
+                                      ),
+                                      8.horizontalSpace,
+                                      Expanded(
+                                        child: ButtonWithRadiusWidget(
+                                          buttonTitle: AppStrings.phone,
+                                          callback: () {
+                                            controller.onAction(
+                                              OnboardingAction.loginWithPhone(),
+                                            );
+                                          },
+                                          borderRadius: 6.r,
+                                          iconWidget: FaIcon(
+                                            FontAwesomeIcons.phone,
+                                            size: 16,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                            orElse: () {
+                              return Container();
+                            },
+                          );
+                        },
+                      ),
                     ),
-                  ),
 
-                  CommonLabelTextWidget(
-                    text: AppStrings.consent,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12.sp,
-                    textColor: R.palette.primary,
-                  ),
-                ],
-              ).marginOnly(bottom: 16.h),
+                    CommonLabelTextWidget(
+                      text: AppStrings.consent,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12.sp,
+                      textColor: R.palette.primary,
+                    ),
+                  ],
+                ).marginOnly(bottom: 16.h),
+              ),
             ),
           ),
         ),

@@ -19,4 +19,6 @@ final Map<String, String> enUS = {
   'phoneOptionalHint': "Enter your phone number",
   'referral': "Referral code (Optional)",
   'referralHint': "Enter referral code",
+  'mineGoldBuildFortune':'Mine digital gold, build your fortune',
+  'welcome':'Welcome, ',
 };

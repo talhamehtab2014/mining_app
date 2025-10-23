@@ -39,4 +39,6 @@ class AppStrings {
 
   static String get referralHint => 'referralHint'.tr;
   static String get signUpWithEmail => 'signUpWithEmail'.tr;
+  static String get welcome => 'welcome'.tr;
+  static String get mineGoldBuildFortune => 'mineGoldBuildFortune'.tr;
 }
