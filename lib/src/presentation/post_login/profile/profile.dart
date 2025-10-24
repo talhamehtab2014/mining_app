@@ -9,6 +9,9 @@ class ProfileView extends GetView<ProfileViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("Profile View")));
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(child: Text("Profile View")),
+    );
   }
 }

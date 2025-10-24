@@ -5,6 +5,11 @@ import 'package:mining_application/src/core/localization/app_strings.dart';
 import 'package:mining_application/src/core/resource/r.dart';
 import 'package:mining_application/src/presentation/common_widgets/common_label_text_widget.dart';
 import 'package:mining_application/src/presentation/post_login/bottom_navigation/bottom_navigation_view_model.dart';
+import 'package:mining_application/src/presentation/post_login/bottom_navigation/model/bottom_navigation_state.dart';
+import 'package:mining_application/src/presentation/post_login/history/history.dart';
+import 'package:mining_application/src/presentation/post_login/home/home.dart';
+import 'package:mining_application/src/presentation/post_login/profile/profile.dart';
+import 'package:mining_application/src/presentation/post_login/reffrals/refferal.dart';
 
 class BottomNavigationView extends StatefulWidget {
   static const String id = '/BottomNavigationView';
@@ -108,6 +113,23 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
                   ),
                   16.verticalSpace,
                   tabBarWidget(controller),
+                  12.verticalSpace,
+                  Expanded(
+                    child: controller.state.when(
+                      homeState: () {
+                        return HomeView();
+                      },
+                      referralState: () {
+                        return ReferralView();
+                      },
+                      historyState: () {
+                        return HistoryView();
+                      },
+                      settingsState: () {
+                        return ProfileView();
+                      },
+                    ),
+                  ),
                 ],
               ).paddingSymmetric(horizontal: 16.w, vertical: 16.h);
             },
@@ -129,13 +151,10 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
         children: controller.iconData.map((element) {
           return Expanded(
             child: statIconTile(
-              element,
-              isSelected:
-                  controller.selectedIndex ==
-                  controller.iconData.indexOf(element),
+              element.iconPath,
+              isSelected: controller.state == element.state,
               onTap: () {
-                controller.updateIndex(controller.iconData.indexOf(element));
-              },
+                controller.onAction(element.action);},
             ),
           );
         }).toList(),

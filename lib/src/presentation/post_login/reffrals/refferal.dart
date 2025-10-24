@@ -9,6 +9,9 @@ class ReferralView extends GetView<ReferralViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("Referral View")));
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(child: Text("Referral View")),
+    );
   }
 }

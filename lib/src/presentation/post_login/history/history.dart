@@ -9,6 +9,9 @@ class HistoryView extends GetView<HistoryViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("History View")));
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(child: Text("History View")),
+    );
   }
 }

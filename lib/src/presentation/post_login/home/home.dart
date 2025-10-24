@@ -9,6 +9,9 @@ class HomeView extends GetView<HomeViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: Text("Home View")));
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(child: Text("Home View")),
+    );
   }
 }
