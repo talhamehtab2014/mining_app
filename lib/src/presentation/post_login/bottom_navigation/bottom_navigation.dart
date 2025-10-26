@@ -145,7 +145,7 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
       decoration: BoxDecoration(
         color: R.palette.yellow900,
 
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(20.r),
       ),
       child: Row(
         children: controller.iconData.map((element) {

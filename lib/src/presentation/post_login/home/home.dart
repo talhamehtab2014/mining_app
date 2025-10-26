@@ -27,23 +27,22 @@ class HomeView extends GetView<HomeViewModel> {
                     ),
                     8.horizontalSpace,
                     Expanded(
-                      child: homeTopHeaderCard('Mining Rate', '1.00 AU/mine'),
+                      child: homeTopHeaderCard('Total Balance', '1.17 AU'),
                     ),
                   ],
                 ),
-                if (controller.isMineStarted) ...[
-                  16.verticalSpace,
-                  _nextMineButtonSection(),
-                ],
+                if (controller.isMineStarted) 16.verticalSpace,
+                _nextMineButtonSection(controller.isMineStarted),
+
                 32.verticalSpace,
                 SeesawZoom(
-                  runFor: const Duration(seconds: 10),
+                  runFor: const Duration(seconds: 3),
                   period: const Duration(milliseconds: 1200),
                   maxDegrees: 12,
                   minScale: 0.92,
                   maxScale: 1.0,
                   autoStart: false,
-                  startOnTap: true,
+                  startOnTap: !controller.isMineStarted,
                   onStart: () {
                     controller.isMineStarted = false;
                     controller.update();
@@ -56,7 +55,9 @@ class HomeView extends GetView<HomeViewModel> {
                     alignment: Alignment.center,
                     padding: EdgeInsets.all(16.sp),
                     decoration: BoxDecoration(
-                      color: R.palette.amber500,
+                      color: R.palette.amber500.withOpacity(
+                        controller.isMineStarted ? 0.5 : 1.0,
+                      ),
                       border: Border.all(color: R.palette.yellow500),
                       shape: BoxShape.circle,
                     ),
@@ -70,7 +71,9 @@ class HomeView extends GetView<HomeViewModel> {
                         ),
                         16.verticalSpace,
                         CommonLabelTextWidget(
-                          text: 'Start Mining',
+                          text: controller.isMineStarted
+                              ? 'Cooldown'
+                              : 'Start Mining',
                           fontWeight: FontWeight.w500,
                           fontSize: 16.sp,
                           textColor: R.palette.yellow900,
@@ -97,62 +100,71 @@ class HomeView extends GetView<HomeViewModel> {
     );
   }
 
-  Widget _nextMineButtonSection() {
-    return Container(
-      padding: EdgeInsets.all(16.sp),
-      decoration: BoxDecoration(
-        color: R.palette.yellow900,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: R.palette.yellow500),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              Container(
-                height: 58.h,
-                width: 58.h,
-                decoration: BoxDecoration(
-                  color: R.palette.yellow500,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.schedule,
-                  color: R.palette.yellow900,
-                  size: 28.sp,
-                ),
-              ),
-              8.horizontalSpace,
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CommonLabelTextWidget(
-                    text: 'Next Mine In',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16.sp,
-                    textColor: R.palette.yellow500,
+  Widget _nextMineButtonSection(bool isMineStarted) {
+    return AnimatedCrossFade(
+      duration: Duration(milliseconds: 500),
+      firstChild: Container(
+        padding: EdgeInsets.all(16.sp),
+        decoration: BoxDecoration(
+          color: R.palette.yellow900,
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: R.palette.yellow500),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Container(
+                  height: 58.h,
+                  width: 58.h,
+                  decoration: BoxDecoration(
+                    color: R.palette.yellow500,
+                    shape: BoxShape.circle,
                   ),
-                  16.verticalSpace,
-                  CommonLabelTextWidget(
-                    text: '23:15:42',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 22.sp,
-                    textColor: R.palette.yellow500,
+                  child: Icon(
+                    Icons.schedule,
+                    color: R.palette.yellow900,
+                    size: 28.sp,
                   ),
-                ],
-              ),
-            ],
-          ),
-          16.verticalSpace,
-          LinearProgressIndicator(
-            value: .1,
-            color: R.palette.yellow600,
-            backgroundColor: R.palette.yellow800,
-          ),
-        ],
+                ),
+                8.horizontalSpace,
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CommonLabelTextWidget(
+                      text: 'Next Mine In',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16.sp,
+                      textColor: R.palette.yellow500,
+                    ),
+                    16.verticalSpace,
+                    Obx(
+                      () => CommonLabelTextWidget(
+                        text: controller.hmsLetters,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 22.sp,
+                        textColor: R.palette.yellow500,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            16.verticalSpace,
+            LinearProgressIndicator(
+              value: .1,
+              color: R.palette.yellow600,
+              backgroundColor: R.palette.yellow800,
+            ),
+          ],
+        ),
       ),
+      secondChild: SizedBox.shrink(),
+      crossFadeState: isMineStarted
+          ? CrossFadeState.showFirst
+          : CrossFadeState.showSecond,
     );
   }
 
