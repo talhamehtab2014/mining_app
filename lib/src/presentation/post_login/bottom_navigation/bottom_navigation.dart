@@ -154,7 +154,8 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
               element.iconPath,
               isSelected: controller.state == element.state,
               onTap: () {
-                controller.onAction(element.action);},
+                controller.onAction(element.action);
+              },
             ),
           );
         }).toList(),
@@ -187,7 +188,7 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
           ),
           padding: padding ?? EdgeInsets.all(4.w),
           alignment: Alignment.center,
-          child: Icon(icon),
+          child: Icon(icon, color: isSelected ? R.palette.yellow500 : null),
         ),
       ),
     );
