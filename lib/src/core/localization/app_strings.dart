@@ -41,4 +41,13 @@ class AppStrings {
   static String get signUpWithEmail => 'signUpWithEmail'.tr;
   static String get welcome => 'welcome'.tr;
   static String get mineGoldBuildFortune => 'mineGoldBuildFortune'.tr;
+  static String get referralRewards => 'referralRewards'.tr;
+  static String get referralRewardsDetails => 'referralRewardsDetails'.tr;
+  static String get yourReferrals => 'yourReferrals'.tr;
+  static String get shareReferralCode => 'shareReferralCode'.tr;
+  static String get noReferralYet => 'noReferralYet'.tr;
+  static String get shareYourCode => 'shareYourCode'.tr;
+  static String get yourReferralCode => 'yourReferralCode'.tr;
+  static String get totalReferrals => 'totalReferrals'.tr;
+  static String get earned => 'earned'.tr;
 }

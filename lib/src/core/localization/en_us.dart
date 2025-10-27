@@ -14,11 +14,25 @@ final Map<String, String> enUS = {
   'google': 'Google',
   'phone': 'Phone',
   'name': 'Name',
-  'nameHint':" Enter your name",
+  'nameHint': " Enter your name",
   'phoneOptional': "Phone (Optional)",
   'phoneOptionalHint': "Enter your phone number",
   'referral': "Referral code (Optional)",
   'referralHint': "Enter referral code",
-  'mineGoldBuildFortune':'Mine digital gold, build your fortune',
-  'welcome':'Welcome, ',
+  'mineGoldBuildFortune': 'Mine digital gold, build your fortune',
+  'welcome': 'Welcome, ',
+  'referralRewards': 'Referral Rewards',
+  'referralRewardsDetails': '''
+• Earn 10% of your referrals' mining
+• Get +0.5 AU/mine rate boost per referral
+• Referrals also get a 5 AU welcome bonus
+• No limit on number of referrals
+  ''',
+  'yourReferrals': 'Your Referrals ',
+  'shareReferralCode':'Share referral code',
+  'noReferralYet':'No referrals yet',
+  'shareYourCode':'Share your code to start earning!',
+  'yourReferralCode':'Your Referral Code',
+  'totalReferrals':'Total Referrals',
+  'earned':'Earned',
 };
