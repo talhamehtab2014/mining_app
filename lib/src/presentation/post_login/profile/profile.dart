@@ -19,10 +19,63 @@ class ProfileView extends GetView<ProfileViewModel> {
       backgroundColor: Colors.transparent,
       body: Column(
         children: [
+          darkLightSwitcher(),
           16.verticalSpace,
           profileTopHeaderCard(),
           16.verticalSpace,
           logoutButton(context),
+        ],
+      ),
+    );
+  }
+
+  Widget darkLightSwitcher() {
+    return Container(
+      padding: EdgeInsets.all(16.sp),
+      decoration: BoxDecoration(
+        color: R.palette.yellow900,
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(color: R.palette.yellow500),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CommonLabelTextWidget(
+                text: 'Appearance',
+                fontWeight: FontWeight.w500,
+                fontSize: 14.sp,
+                textColor: R.palette.yellow300,
+              ),
+              12.verticalSpace,
+              CommonLabelTextWidget(
+                text: false ? 'Light' : 'Dark',
+                fontWeight: FontWeight.w500,
+                fontSize: 14.sp,
+                textColor: R.palette.yellow300,
+              ),
+            ],
+          ),
+          8.horizontalSpace,
+          GestureDetector(
+            onTap: () {},
+            child: Container(
+              padding: EdgeInsets.all(8.sp),
+              decoration: BoxDecoration(
+                color: R.palette.yellow900,
+                borderRadius: BorderRadius.circular(8.r),
+                border: Border.all(color: R.palette.yellow500),
+              ),
+              child: Icon(
+                true ? Icons.wb_sunny_outlined : Icons.nightlight_round,
+                color: R.palette.yellow500,
+                size: 16.sp,
+              ),
+            ),
+          ),
         ],
       ),
     );
