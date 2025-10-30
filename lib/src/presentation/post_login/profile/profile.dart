@@ -6,24 +6,104 @@ import 'package:mining_application/src/core/resource/r.dart';
 import 'package:mining_application/src/core/utils/routes.dart';
 import 'package:mining_application/src/presentation/common_widgets/common_button_widget.dart';
 import 'package:mining_application/src/presentation/common_widgets/common_label_text_widget.dart';
+import 'package:mining_application/src/presentation/common_widgets/common_text_field_widget.dart';
 import 'package:mining_application/src/presentation/post_login/profile/profile_view_model.dart';
 
-class ProfileView extends GetView<ProfileViewModel> {
+class ProfileView extends StatelessWidget {
   static const String id = '/ProfileView';
 
   const ProfileView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Column(
+    return GetBuilder<ProfileViewModel>(
+      builder: (controller) {
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                editProfileCard(),
+                16.verticalSpace,
+                darkLightSwitcher(),
+                16.verticalSpace,
+                profileTopHeaderCard(),
+                16.verticalSpace,
+                logoutButton(context),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget editProfileCard() {
+    return Container(
+      padding: EdgeInsets.all(16.sp),
+      decoration: BoxDecoration(
+        color: R.palette.yellow900,
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(color: R.palette.yellow500),
+      ),
+      child: Column(
         children: [
-          darkLightSwitcher(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonLabelTextWidget(
+                text: AppStrings.profileInformation,
+                fontWeight: FontWeight.w500,
+                fontSize: 16.sp,
+                textColor: R.palette.yellow100,
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
+                  decoration: BoxDecoration(
+                    color: R.palette.yellow700,
+                    borderRadius: BorderRadius.circular(8.r),
+                    border: Border.all(color: R.palette.yellow500),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.edit_outlined,
+                        color: R.palette.yellow500,
+                        size: 14.sp,
+                      ),
+                      6.horizontalSpace,
+                      CommonLabelTextWidget(
+                        text: "Edit",
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12.sp,
+                        textColor: R.palette.yellow100,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
           16.verticalSpace,
-          profileTopHeaderCard(),
-          16.verticalSpace,
-          logoutButton(context),
+          CommonTextFieldWidget(
+            labelText: AppStrings.name,
+            controller: TextEditingController(text: 'Guest User'),
+            hintText: AppStrings.nameHint,
+          ),
+          12.verticalSpace,
+          CommonTextFieldWidget(
+            labelText: AppStrings.emailLabel,
+            controller: TextEditingController(text: 'guest@gmail.com'),
+            hintText: AppStrings.emailHint,
+          ),
+          12.verticalSpace,
+          CommonTextFieldWidget(
+            labelText: AppStrings.phone,
+            controller: TextEditingController(text: 'Not Provided'),
+            hintText: AppStrings.phoneOptionalHint,
+          ),
         ],
       ),
     );
@@ -45,14 +125,14 @@ class ProfileView extends GetView<ProfileViewModel> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CommonLabelTextWidget(
-                text: 'Appearance',
+                text: AppStrings.appearance,
                 fontWeight: FontWeight.w500,
-                fontSize: 14.sp,
-                textColor: R.palette.yellow300,
+                fontSize: 16.sp,
+                textColor: R.palette.yellow100,
               ),
               12.verticalSpace,
               CommonLabelTextWidget(
-                text: false ? 'Light' : 'Dark',
+                text: false ? AppStrings.light : AppStrings.dark,
                 fontWeight: FontWeight.w500,
                 fontSize: 14.sp,
                 textColor: R.palette.yellow300,
@@ -65,13 +145,15 @@ class ProfileView extends GetView<ProfileViewModel> {
             child: Container(
               padding: EdgeInsets.all(8.sp),
               decoration: BoxDecoration(
-                color: R.palette.yellow900,
+                gradient: LinearGradient(
+                  colors: [R.palette.yellow500, R.palette.yellow700],
+                ),
                 borderRadius: BorderRadius.circular(8.r),
                 border: Border.all(color: R.palette.yellow500),
               ),
               child: Icon(
                 true ? Icons.wb_sunny_outlined : Icons.nightlight_round,
-                color: R.palette.yellow500,
+                color: R.palette.yellow950,
                 size: 16.sp,
               ),
             ),

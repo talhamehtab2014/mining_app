@@ -46,4 +46,8 @@ final Map<String, String> enUS = {
   'tokenSymbol':'Token Symbol',
   'logout':'Logout',
   'cancel':'Cancel',
+  'appearance':'Appearance',
+  'dark':'Dark',
+  'light':'Light',
+  'profileInformation':'Profile Information',
 };

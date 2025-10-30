@@ -61,4 +61,8 @@ class AppStrings {
   static String get tokenSymbol => 'tokenSymbol'.tr;
   static String get logout => 'logout'.tr;
   static String get cancel => 'cancel'.tr;
+  static String get appearance => 'appearance'.tr;
+  static String get dark => 'dark'.tr;
+  static String get light => 'light'.tr;
+  static String get profileInformation => 'profileInformation'.tr;
 }

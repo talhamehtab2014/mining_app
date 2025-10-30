@@ -10,6 +10,7 @@ class CommonTextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final TextInputType keyboardType;
   final bool isPassword;
+  final bool isEnabled;
 
   const CommonTextFieldWidget({
     super.key,
@@ -18,6 +19,7 @@ class CommonTextFieldWidget extends StatelessWidget {
     this.hintText = '',
     this.keyboardType = TextInputType.text,
     this.isPassword = false,
+    this.isEnabled = true,
   });
 
   @override
@@ -37,7 +39,7 @@ class CommonTextFieldWidget extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
           decoration: BoxDecoration(
-            color: R.palette.cardBackground,
+            color:isEnabled? R.palette.cardBackground: R.palette.yellow800,
             borderRadius: BorderRadius.circular(8.r),
             border: Border.all(color: R.palette.borderOrDivider, width: 1.w),
           ),
@@ -48,6 +50,7 @@ class CommonTextFieldWidget extends StatelessWidget {
               fontWeight: FontWeight.w500,
               color: R.palette.primary,
             ),
+            enabled: isEnabled,
             keyboardType: keyboardType,
             obscureText: isPassword,
             decoration: InputDecoration(
