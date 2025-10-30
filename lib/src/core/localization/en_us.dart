@@ -35,4 +35,9 @@ final Map<String, String> enUS = {
   'yourReferralCode':'Your Referral Code',
   'totalReferrals':'Total Referrals',
   'earned':'Earned',
+  'totalMined':'Total Mined',
+  'sessions':'Sessions',
+  'miningHistory':'Mining History',
+  'noMiningHistory':'No mining history yet',
+  'startMiningNow':'Start mining to see your history!',
 };

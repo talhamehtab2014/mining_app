@@ -50,4 +50,9 @@ class AppStrings {
   static String get yourReferralCode => 'yourReferralCode'.tr;
   static String get totalReferrals => 'totalReferrals'.tr;
   static String get earned => 'earned'.tr;
+  static String get totalMined => 'totalMined'.tr;
+  static String get sessions => 'sessions'.tr;
+  static String get miningHistory => 'miningHistory'.tr;
+  static String get noMiningHistory => 'noMiningHistory'.tr;
+  static String get startMiningNow => 'startMiningNow'.tr;
 }
