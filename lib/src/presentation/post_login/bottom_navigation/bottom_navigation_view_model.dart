@@ -12,7 +12,6 @@ class BottomNavigationViewModel extends GetxController {
       action: BottomNavigationAction.homeAction(),
       state: BottomNavigationState.homeState(),
     ),
-
     BottomNavigationItemModel(
       iconPath: Icons.history,
       action: BottomNavigationAction.historyAction(),

@@ -7,6 +7,9 @@ import 'package:mining_application/src/core/utils/routes.dart';
 import 'package:mining_application/src/presentation/common_widgets/common_button_widget.dart';
 import 'package:mining_application/src/presentation/common_widgets/common_label_text_widget.dart';
 import 'package:mining_application/src/presentation/common_widgets/common_text_field_widget.dart';
+import 'package:mining_application/src/presentation/post_login/profile/models/action/profile_view_action.dart';
+import 'package:mining_application/src/presentation/post_login/profile/models/profile_model.dart';
+import 'package:mining_application/src/presentation/post_login/profile/models/state/profile_view_state.dart';
 import 'package:mining_application/src/presentation/post_login/profile/profile_view_model.dart';
 
 class ProfileView extends StatelessWidget {
@@ -21,16 +24,19 @@ class ProfileView extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
-            child: Column(
-              children: [
-                editProfileCard(),
-                16.verticalSpace,
-                darkLightSwitcher(),
-                16.verticalSpace,
-                profileTopHeaderCard(),
-                16.verticalSpace,
-                logoutButton(context),
-              ],
+            child: controller.state.maybeWhen(
+              initial: (state) => Column(
+                children: [
+                  editProfileCard(controller, state),
+                  16.verticalSpace,
+                  darkLightSwitcher(state),
+                  16.verticalSpace,
+                  profileTopHeaderCard(),
+                  16.verticalSpace,
+                  logoutButton(context),
+                ],
+              ),
+              orElse: () => Container(),
             ),
           ),
         );
@@ -38,7 +44,7 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget editProfileCard() {
+  Widget editProfileCard(ProfileViewModel controller, ProfileModel? state) {
     return Container(
       padding: EdgeInsets.all(16.sp),
       decoration: BoxDecoration(
@@ -57,59 +63,62 @@ class ProfileView extends StatelessWidget {
                 fontSize: 16.sp,
                 textColor: R.palette.yellow100,
               ),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
-                  decoration: BoxDecoration(
-                    color: R.palette.yellow700,
-                    borderRadius: BorderRadius.circular(8.r),
-                    border: Border.all(color: R.palette.yellow500),
-                  ),
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.edit_outlined,
-                        color: R.palette.yellow500,
-                        size: 14.sp,
-                      ),
-                      6.horizontalSpace,
-                      CommonLabelTextWidget(
-                        text: "Edit",
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12.sp,
-                        textColor: R.palette.yellow100,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              state?.isProfileEdited == true
+                  ? Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        actionButtons(false, AppStrings.cancel, () {
+                          controller.onAction(
+                            ProfileViewAction.editProfile(
+                              !(state?.isProfileEdited ?? false),
+                            ),
+                          );
+                        }, R.palette.red600),
+                        6.horizontalSpace,
+                        actionButtons(
+                          false,
+                          AppStrings.save,
+                          () {},
+                          R.palette.yellow700,
+                        ),
+                      ],
+                    )
+                  : actionButtons(true, AppStrings.edit, () {
+                      controller.onAction(
+                        ProfileViewAction.editProfile(
+                          !(state?.isProfileEdited ?? false),
+                        ),
+                      );
+                    }, R.palette.yellow700),
             ],
           ),
           16.verticalSpace,
           CommonTextFieldWidget(
             labelText: AppStrings.name,
-            controller: TextEditingController(text: 'Guest User'),
+            controller: TextEditingController(text: '${state?.username}'),
             hintText: AppStrings.nameHint,
+            isEnabled: state?.isProfileEdited ?? true,
           ),
           12.verticalSpace,
           CommonTextFieldWidget(
             labelText: AppStrings.emailLabel,
-            controller: TextEditingController(text: 'guest@gmail.com'),
+            controller: TextEditingController(text: '${state?.email}'),
             hintText: AppStrings.emailHint,
+            isEnabled: state?.isProfileEdited ?? true,
           ),
           12.verticalSpace,
           CommonTextFieldWidget(
             labelText: AppStrings.phone,
-            controller: TextEditingController(text: 'Not Provided'),
+            controller: TextEditingController(text: '${state?.phoneNumber}'),
             hintText: AppStrings.phoneOptionalHint,
+            isEnabled: state?.isProfileEdited ?? true,
           ),
         ],
       ),
     );
   }
 
-  Widget darkLightSwitcher() {
+  Widget darkLightSwitcher(ProfileModel? state) {
     return Container(
       padding: EdgeInsets.all(16.sp),
       decoration: BoxDecoration(
@@ -207,6 +216,37 @@ class ProfileView extends StatelessWidget {
         textColor: R.palette.yellow100,
       ),
     ],
+  );
+
+  Widget actionButtons(
+    bool isIconRequired,
+    String title,
+    VoidCallback callback,
+    Color color,
+  ) => GestureDetector(
+    onTap: callback,
+    child: Container(
+      padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(8.r),
+        border: Border.all(color: R.palette.yellow500),
+      ),
+      child: Row(
+        children: [
+          if (isIconRequired) ...[
+            Icon(Icons.edit_outlined, color: R.palette.yellow500, size: 14.sp),
+            6.horizontalSpace,
+          ],
+          CommonLabelTextWidget(
+            text: title,
+            fontWeight: FontWeight.w500,
+            fontSize: 12.sp,
+            textColor: R.palette.yellow100,
+          ),
+        ],
+      ),
+    ),
   );
 
   Widget logoutButton(context) {

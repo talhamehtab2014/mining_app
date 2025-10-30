@@ -65,4 +65,6 @@ class AppStrings {
   static String get dark => 'dark'.tr;
   static String get light => 'light'.tr;
   static String get profileInformation => 'profileInformation'.tr;
+  static String get edit => 'edit'.tr;
+  static String get save => 'save'.tr;
 }
