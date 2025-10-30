@@ -55,4 +55,10 @@ class AppStrings {
   static String get miningHistory => 'miningHistory'.tr;
   static String get noMiningHistory => 'noMiningHistory'.tr;
   static String get startMiningNow => 'startMiningNow'.tr;
+  static String get aboutAUMining => 'aboutAUMining'.tr;
+  static String get version => 'version'.tr;
+  static String get miningCycle => 'miningCycle'.tr;
+  static String get tokenSymbol => 'tokenSymbol'.tr;
+  static String get logout => 'logout'.tr;
+  static String get cancel => 'cancel'.tr;
 }

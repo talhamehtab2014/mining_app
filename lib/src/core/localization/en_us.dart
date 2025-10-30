@@ -40,4 +40,10 @@ final Map<String, String> enUS = {
   'miningHistory':'Mining History',
   'noMiningHistory':'No mining history yet',
   'startMiningNow':'Start mining to see your history!',
+  'aboutAUMining':'About AU Mining',
+  'version':'Version',
+  'miningCycle':'Mining Cycle',
+  'tokenSymbol':'Token Symbol',
+  'logout':'Logout',
+  'cancel':'Cancel',
 };
