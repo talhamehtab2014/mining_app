@@ -14,7 +14,7 @@ class Palette {
   static const _cardBackground = Color(0xFF5A2504);
   static const _borderOrDivider = Color(0xFF7B4500);
   static const _labelColor = Color(0xFFFEE685);
-  static const Color _yellow50 = Color(0xFFFEFCE8);
+
   static const Color _yellow100 = Color(0xFFFEF9C3);
   static const Color _yellow200 = Color(0xFFFEF08A);
   static const Color _yellow300 = Color(0xFFFDE047);
@@ -27,8 +27,6 @@ class Palette {
   static const Color _yellow950 = Color(0xFF422006);
   static const Color _amber500 = Color(0xFFF59E0B);
   static const Color _red600 = Color(0xFFDC2626);
-
-  Color get yellow50 => _yellow50;
 
   Color get yellow100 => _yellow100;
 
