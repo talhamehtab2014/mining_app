@@ -52,8 +52,8 @@ class _MyAppState extends State<MyApp> {
     translations: AppTranslations(),
     initialRoute: Routes().getSplashPage(),
     getPages: Routes().routeMap,
-    theme: R.themeData,
-    themeMode: ThemeMode.light,
+    theme: R.darkThemeData,
+    themeMode: ThemeMode.dark,
     smartManagement: SmartManagement.full,
     initialBinding: GlobalDependencies(),
   );
