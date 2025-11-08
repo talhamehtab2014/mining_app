@@ -32,14 +32,14 @@ class CommonTextFieldWidget extends StatelessWidget {
           text: labelText,
           fontSize: 12.sp,
           fontWeight: FontWeight.w500,
-          textColor: R.palette.labelColor,
+          textColor: Theme.of(context).colorScheme.tertiary,
           padding: 0,
         ),
         8.verticalSpace,
         Container(
           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
           decoration: BoxDecoration(
-            color:isEnabled? R.palette.cardBackground: R.palette.yellow800,
+            color: isEnabled ? R.palette.cardBackground : R.palette.yellow800,
             borderRadius: BorderRadius.circular(8.r),
             border: Border.all(color: R.palette.borderOrDivider, width: 1.w),
           ),

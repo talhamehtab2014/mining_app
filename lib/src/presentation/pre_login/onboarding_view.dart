@@ -21,7 +21,7 @@ class OnboardingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScope.of(context).unfocus();
         FocusManager.instance.primaryFocus?.unfocus();
       },
@@ -30,7 +30,10 @@ class OnboardingView extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [R.palette.yellow900, R.palette.yellow800],
+            colors: [
+              Theme.of(context).colorScheme.onSurface,
+              Theme.of(context).colorScheme.surface,
+            ], // dark
           ),
         ),
         child: Scaffold(
@@ -61,7 +64,7 @@ class OnboardingView extends StatelessWidget {
                       padding: EdgeInsets.all(16.w),
                       margin: EdgeInsets.all(16.w),
                       decoration: BoxDecoration(
-                        color: R.palette.cardBackground.withAlpha(150),
+                        color: Theme.of(context).colorScheme.secondary,
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: GetBuilder<OnboardingViewModel>(
