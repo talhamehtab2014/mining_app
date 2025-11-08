@@ -76,6 +76,7 @@ class OnboardingView extends StatelessWidget {
                                   Row(
                                     children: [
                                       _buildTabButton(
+                                        context: context,
                                         title: AppStrings.login,
                                         isSelected:
                                             state == OnboardingStateEnum.login,
@@ -87,6 +88,7 @@ class OnboardingView extends StatelessWidget {
                                       ),
                                       8.horizontalSpace,
                                       _buildTabButton(
+                                        context: context,
                                         title: AppStrings.signup,
                                         isSelected:
                                             state == OnboardingStateEnum.signup,
@@ -189,6 +191,7 @@ class OnboardingView extends StatelessWidget {
   }
 
   Widget _buildTabButton({
+    required BuildContext context,
     required String title,
     required bool isSelected,
     required VoidCallback onTap,
@@ -200,7 +203,9 @@ class OnboardingView extends StatelessWidget {
           alignment: Alignment.center,
           padding: EdgeInsets.symmetric(vertical: 8.h),
           decoration: BoxDecoration(
-            color: isSelected ? R.palette.primary : R.palette.cardBackground,
+            color: isSelected
+                ? R.palette.primary
+                : Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(6.r),
             border: Border.all(
               color: isSelected ? R.palette.primary : R.palette.borderOrDivider,
@@ -210,7 +215,9 @@ class OnboardingView extends StatelessWidget {
             text: title,
             fontWeight: FontWeight.w500,
             fontSize: 14.sp,
-            textColor: isSelected ? R.palette.blackColor : R.palette.white,
+            textColor: isSelected
+                ? R.palette.blackColor
+                : Theme.of(context).colorScheme.tertiary,
           ),
         ),
       ),
@@ -233,7 +240,7 @@ class OnboardingView extends StatelessWidget {
           hintText: AppStrings.passwordHint,
           isPassword: true,
         ),
-        8.verticalSpace,
+        16.verticalSpace,
         ButtonWithRadiusWidget(
           buttonTitle: AppStrings.loginWithEmail,
           callback: () {
@@ -281,7 +288,7 @@ class OnboardingView extends StatelessWidget {
           controller: TextEditingController(),
           hintText: AppStrings.referralHint,
         ),
-        8.verticalSpace,
+        16.verticalSpace,
         ButtonWithRadiusWidget(
           buttonTitle: AppStrings.signUpWithEmail,
           callback: () {

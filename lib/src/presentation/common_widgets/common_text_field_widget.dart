@@ -39,7 +39,9 @@ class CommonTextFieldWidget extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
           decoration: BoxDecoration(
-            color: isEnabled ? R.palette.cardBackground : R.palette.yellow800,
+            color: isEnabled
+                ? Theme.of(context).colorScheme.onSecondary
+                : R.palette.yellow800,
             borderRadius: BorderRadius.circular(8.r),
             border: Border.all(color: R.palette.borderOrDivider, width: 1.w),
           ),
@@ -48,8 +50,9 @@ class CommonTextFieldWidget extends StatelessWidget {
             style: GoogleFonts.poppins(
               fontSize: 10.sp,
               fontWeight: FontWeight.w500,
-              color: R.palette.primary,
+              color: Theme.of(context).colorScheme.tertiary,
             ),
+            cursorColor: Theme.of(context).colorScheme.tertiary,
             enabled: isEnabled,
             keyboardType: keyboardType,
             obscureText: isPassword,
@@ -61,7 +64,7 @@ class CommonTextFieldWidget extends StatelessWidget {
                 text: hintText,
                 fontSize: 10.sp,
                 fontWeight: FontWeight.w500,
-                textColor: R.palette.primary,
+                textColor: Theme.of(context).colorScheme.tertiary,
               ),
             ),
           ),
