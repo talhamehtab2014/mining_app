@@ -38,7 +38,10 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
         gradient: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
-          colors: [R.palette.yellow900, R.palette.yellow700],
+          colors: [
+            Theme.of(context).colorScheme.onSurface,
+            Theme.of(context).colorScheme.surface,
+          ], // dark
         ),
       ),
       child: Scaffold(
@@ -78,7 +81,7 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
                           vertical: 6.h,
                         ),
                         decoration: BoxDecoration(
-                          color: R.palette.yellow700,
+                          color: Theme.of(context).colorScheme.secondary,
                           borderRadius: BorderRadius.circular(20.r),
                           border: Border.all(
                             color: R.palette.yellow500,
@@ -143,14 +146,14 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
     return Container(
       padding: EdgeInsets.all(4.h),
       decoration: BoxDecoration(
-        color: R.palette.yellow900,
-
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(20.r),
       ),
       child: Row(
         children: controller.iconData.map((element) {
           return Expanded(
             child: statIconTile(
+              context,
               element.iconPath,
               isSelected: controller.state == element.state,
               onTap: () {
@@ -164,6 +167,7 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
   }
 
   Widget statIconTile(
+    BuildContext context,
     IconData icon, {
     bool isSelected = false,
     VoidCallback? onTap,
@@ -181,7 +185,9 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(r),
-            color: isSelected ? (background ?? R.palette.yellow800) : null,
+            color: isSelected
+                ? (background ?? Theme.of(context).colorScheme.onSurface)
+                : null,
             border: isSelected
                 ? Border.all(color: border ?? R.palette.yellow500)
                 : null,

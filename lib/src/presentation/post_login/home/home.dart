@@ -23,16 +23,24 @@ class HomeView extends GetView<HomeViewModel> {
                 Row(
                   children: [
                     Expanded(
-                      child: homeTopHeaderCard('Mining Rate', '1.00 AU/mine'),
+                      child: homeTopHeaderCard(
+                        context,
+                        'Mining Rate',
+                        '1.00 AU/mine',
+                      ),
                     ),
                     8.horizontalSpace,
                     Expanded(
-                      child: homeTopHeaderCard('Total Balance', '1.17 AU'),
+                      child: homeTopHeaderCard(
+                        context,
+                        'Total Balance',
+                        '1.17 AU',
+                      ),
                     ),
                   ],
                 ),
                 if (controller.isMineStarted) 16.verticalSpace,
-                _nextMineButtonSection(controller.isMineStarted),
+                _nextMineButtonSection(context, controller.isMineStarted),
 
                 32.verticalSpace,
                 SeesawZoom(
@@ -85,7 +93,7 @@ class HomeView extends GetView<HomeViewModel> {
 
                 32.verticalSpace,
 
-                homeBottomInfoCard('How Mining Works', '''
+                homeBottomInfoCard(context, 'How Mining Works', '''
 • Tap "Start Mining" to begin your mining session
 • Each mining session takes 3 seconds to complete
 • You can mine once every 24 hours
@@ -100,13 +108,13 @@ class HomeView extends GetView<HomeViewModel> {
     );
   }
 
-  Widget _nextMineButtonSection(bool isMineStarted) {
+  Widget _nextMineButtonSection(BuildContext context, bool isMineStarted) {
     return AnimatedCrossFade(
       duration: Duration(milliseconds: 500),
       firstChild: Container(
         padding: EdgeInsets.all(16.sp),
         decoration: BoxDecoration(
-          color: R.palette.yellow900,
+          color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: R.palette.yellow500),
         ),
@@ -119,12 +127,12 @@ class HomeView extends GetView<HomeViewModel> {
                   height: 58.h,
                   width: 58.h,
                   decoration: BoxDecoration(
-                    color: R.palette.yellow500,
+                    color: Theme.of(context).colorScheme.onPrimaryFixed,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
                     Icons.schedule,
-                    color: R.palette.yellow900,
+                    color: Theme.of(context).colorScheme.onSurface,
                     size: 28.sp,
                   ),
                 ),
@@ -137,7 +145,7 @@ class HomeView extends GetView<HomeViewModel> {
                       text: 'Next Mine In',
                       fontWeight: FontWeight.w500,
                       fontSize: 16.sp,
-                      textColor: R.palette.yellow500,
+                      textColor: Theme.of(context).colorScheme.onPrimaryFixed,
                     ),
                     16.verticalSpace,
                     Obx(
@@ -145,7 +153,7 @@ class HomeView extends GetView<HomeViewModel> {
                         text: controller.hmsLetters,
                         fontWeight: FontWeight.w500,
                         fontSize: 22.sp,
-                        textColor: R.palette.yellow500,
+                        textColor: Theme.of(context).colorScheme.onPrimaryFixed,
                       ),
                     ),
                   ],
@@ -155,8 +163,8 @@ class HomeView extends GetView<HomeViewModel> {
             16.verticalSpace,
             LinearProgressIndicator(
               value: .1,
-              color: R.palette.yellow600,
-              backgroundColor: R.palette.yellow800,
+              color: Theme.of(context).colorScheme.onPrimary,
+              backgroundColor: Theme.of(context).colorScheme.surface,
             ),
           ],
         ),
@@ -168,12 +176,12 @@ class HomeView extends GetView<HomeViewModel> {
     );
   }
 
-  Widget homeTopHeaderCard(String title, String value) {
+  Widget homeTopHeaderCard(BuildContext context, String title, String value) {
     return Container(
       height: 90.h,
       padding: EdgeInsets.all(16.sp),
       decoration: BoxDecoration(
-        color: R.palette.yellow900,
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: R.palette.yellow500),
       ),
@@ -184,25 +192,25 @@ class HomeView extends GetView<HomeViewModel> {
             text: title,
             fontWeight: FontWeight.w500,
             fontSize: 16.sp,
-            textColor: R.palette.yellow500,
+            textColor: Theme.of(context).colorScheme.onPrimaryFixed,
           ),
           Spacer(),
           CommonLabelTextWidget(
             text: value,
             fontWeight: FontWeight.w500,
             fontSize: 14.sp,
-            textColor: R.palette.yellow500,
+            textColor: Theme.of(context).colorScheme.onPrimaryFixed,
           ),
         ],
       ),
     );
   }
 
-  Widget homeBottomInfoCard(String title, String value) {
+  Widget homeBottomInfoCard(BuildContext context, String title, String value) {
     return Container(
       padding: EdgeInsets.all(16.sp),
       decoration: BoxDecoration(
-        color: R.palette.yellow900,
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: R.palette.yellow500),
       ),
@@ -214,14 +222,14 @@ class HomeView extends GetView<HomeViewModel> {
             text: title,
             fontWeight: FontWeight.w500,
             fontSize: 16.sp,
-            textColor: R.palette.yellow200,
+            textColor: Theme.of(context).colorScheme.onSecondaryFixedVariant,
           ),
           24.verticalSpace,
           CommonLabelTextWidget(
             text: value,
             fontWeight: FontWeight.w500,
             fontSize: 14.sp,
-            textColor: R.palette.yellow300,
+            textColor: Theme.of(context).colorScheme.onSecondaryFixed,
             maxLines: 9,
             textHeight: 1.5,
           ),
