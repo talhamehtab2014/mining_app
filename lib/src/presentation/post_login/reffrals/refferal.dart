@@ -22,35 +22,48 @@ class ReferralView extends GetView<ReferralViewModel> {
             Row(
               children: [
                 Expanded(
-                  child: referralTopHeaderCard(AppStrings.totalReferrals, "0"),
+                  child: referralTopHeaderCard(
+                    context,
+                    AppStrings.totalReferrals,
+                    "0",
+                  ),
                 ),
                 8.horizontalSpace,
                 Expanded(
-                  child: referralTopHeaderCard(AppStrings.earned, "0 AU"),
+                  child: referralTopHeaderCard(
+                    context,
+                    AppStrings.earned,
+                    "0 AU",
+                  ),
                 ),
               ],
             ),
             16.verticalSpace,
-            referralCodeWidget(),
+            referralCodeWidget(context),
             24.verticalSpace,
             referralInfoCard(
+              context,
               AppStrings.referralRewards,
               AppStrings.referralRewardsDetails,
             ),
             16.verticalSpace,
-            yourReferralCard('${AppStrings.yourReferrals}(0)'),
+            yourReferralCard(context, '${AppStrings.yourReferrals}(0)'),
           ],
         ),
       ),
     );
   }
 
-  Widget referralTopHeaderCard(String title, String value) {
+  Widget referralTopHeaderCard(
+    BuildContext context,
+    String title,
+    String value,
+  ) {
     return Container(
       height: 90.h,
       padding: EdgeInsets.all(16.sp),
       decoration: BoxDecoration(
-        color: R.palette.yellow900,
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: R.palette.yellow500),
       ),
@@ -61,21 +74,21 @@ class ReferralView extends GetView<ReferralViewModel> {
             text: title,
             fontWeight: FontWeight.w500,
             fontSize: 16.sp,
-            textColor: R.palette.yellow500,
+            textColor: Theme.of(context).colorScheme.onPrimaryFixed,
           ),
           Spacer(),
           CommonLabelTextWidget(
             text: value,
             fontWeight: FontWeight.w500,
             fontSize: 14.sp,
-            textColor: R.palette.yellow500,
+            textColor: Theme.of(context).colorScheme.onPrimaryFixed,
           ),
         ],
       ),
     );
   }
 
-  Widget referralCodeWidget() {
+  Widget referralCodeWidget(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -86,14 +99,17 @@ class ReferralView extends GetView<ReferralViewModel> {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: R.palette.yellow700,
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
                 blurRadius: 12,
                 spreadRadius: 3,
                 offset: const Offset(0, 4),
               ),
             ],
             gradient: LinearGradient(
-              colors: [R.palette.yellow700, R.palette.yellow900],
+              colors: [
+                Theme.of(context).colorScheme.onPrimaryContainer,
+                Theme.of(context).colorScheme.onSurface,
+              ],
               end: AlignmentGeometry.bottomRight,
               begin: AlignmentGeometry.topLeft,
             ),
@@ -108,7 +124,9 @@ class ReferralView extends GetView<ReferralViewModel> {
                 text: AppStrings.yourReferralCode,
                 fontWeight: FontWeight.w500,
                 fontSize: 14.sp,
-                textColor: R.palette.yellow200,
+                textColor: Theme.of(
+                  context,
+                ).colorScheme.onSecondaryFixedVariant,
               ),
               16.verticalSpace,
               Row(
@@ -124,7 +142,9 @@ class ReferralView extends GetView<ReferralViewModel> {
                         text: 'AU12345',
                         fontWeight: FontWeight.w500,
                         fontSize: 20.sp,
-                        textColor: R.palette.yellow300,
+                        textColor: Theme.of(
+                          context,
+                        ).colorScheme.onSecondaryFixed,
                       ),
                     ),
                   ),
@@ -161,11 +181,11 @@ class ReferralView extends GetView<ReferralViewModel> {
     );
   }
 
-  Widget referralInfoCard(String title, String value) {
+  Widget referralInfoCard(BuildContext context, String title, String value) {
     return Container(
       padding: EdgeInsets.all(16.sp),
       decoration: BoxDecoration(
-        color: R.palette.yellow900,
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: R.palette.yellow500),
       ),
@@ -177,14 +197,14 @@ class ReferralView extends GetView<ReferralViewModel> {
             text: title,
             fontWeight: FontWeight.w500,
             fontSize: 16.sp,
-            textColor: R.palette.yellow200,
+            textColor: Theme.of(context).colorScheme.onSecondaryFixedVariant,
           ),
           24.verticalSpace,
           CommonLabelTextWidget(
             text: value,
             fontWeight: FontWeight.w500,
             fontSize: 14.sp,
-            textColor: R.palette.yellow300,
+            textColor: Theme.of(context).colorScheme.onSecondaryFixed,
             maxLines: 4,
             textHeight: 1.5,
           ),
@@ -193,7 +213,7 @@ class ReferralView extends GetView<ReferralViewModel> {
     );
   }
 
-  Widget yourReferralCard(String title) {
+  Widget yourReferralCard(BuildContext context, String title) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -202,13 +222,13 @@ class ReferralView extends GetView<ReferralViewModel> {
           text: title,
           fontWeight: FontWeight.w500,
           fontSize: 14.sp,
-          textColor: R.palette.yellow200,
+          textColor: Theme.of(context).colorScheme.onSecondaryFixedVariant,
         ),
         8.verticalSpace,
         Container(
           padding: EdgeInsets.all(16.sp),
           decoration: BoxDecoration(
-            color: R.palette.yellow900,
+            color: Theme.of(context).colorScheme.secondary,
             borderRadius: BorderRadius.circular(12.r),
             border: Border.all(color: R.palette.yellow500),
           ),
@@ -219,21 +239,23 @@ class ReferralView extends GetView<ReferralViewModel> {
                 Icon(
                   Icons.people_alt_outlined,
                   size: 48,
-                  color: R.palette.yellow300,
+                  color: Theme.of(context).colorScheme.onSecondaryFixed,
                 ),
                 16.verticalSpace,
                 CommonLabelTextWidget(
                   text: AppStrings.noReferralYet,
                   fontWeight: FontWeight.w500,
                   fontSize: 14.sp,
-                  textColor: R.palette.yellow100,
+                  textColor: Theme.of(
+                    context,
+                  ).colorScheme.onPrimaryFixedVariant,
                 ),
                 16.verticalSpace,
                 CommonLabelTextWidget(
                   text: AppStrings.shareYourCode,
                   fontWeight: FontWeight.w500,
                   fontSize: 12.sp,
-                  textColor: R.palette.yellow300,
+                  textColor: Theme.of(context).colorScheme.onSecondaryFixed,
                 ),
               ],
             ),

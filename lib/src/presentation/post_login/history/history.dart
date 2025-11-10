@@ -20,10 +20,16 @@ class HistoryView extends GetView<HistoryViewModel> {
           Row(
             children: [
               Expanded(
-                child: historyTopHeaderCard(AppStrings.totalMined, "0.00 AU"),
+                child: historyTopHeaderCard(
+                  context,
+                  AppStrings.totalMined,
+                  "0.00 AU",
+                ),
               ),
               8.horizontalSpace,
-              Expanded(child: historyTopHeaderCard(AppStrings.sessions, "0")),
+              Expanded(
+                child: historyTopHeaderCard(context, AppStrings.sessions, "0"),
+              ),
             ],
           ),
           16.verticalSpace,
@@ -32,30 +38,34 @@ class HistoryView extends GetView<HistoryViewModel> {
               Icon(
                 Icons.calendar_today_outlined,
                 size: 22,
-                color: R.palette.yellow500,
+                color: Theme.of(context).colorScheme.onPrimaryFixed,
               ),
               8.horizontalSpace,
               CommonLabelTextWidget(
                 text: AppStrings.miningHistory,
                 fontWeight: FontWeight.w500,
                 fontSize: 14.sp,
-                textColor: R.palette.yellow300,
+                textColor: Theme.of(context).colorScheme.onSecondaryFixed,
               ),
             ],
           ),
           16.verticalSpace,
-          noMiningHistoryCard(),
+          noMiningHistoryCard(context),
         ],
       ),
     );
   }
 
-  Widget historyTopHeaderCard(String title, String value) {
+  Widget historyTopHeaderCard(
+    BuildContext context,
+    String title,
+    String value,
+  ) {
     return Container(
       height: 90.h,
       padding: EdgeInsets.all(16.sp),
       decoration: BoxDecoration(
-        color: R.palette.yellow900,
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: R.palette.yellow500),
       ),
@@ -66,25 +76,25 @@ class HistoryView extends GetView<HistoryViewModel> {
             text: title,
             fontWeight: FontWeight.w500,
             fontSize: 16.sp,
-            textColor: R.palette.yellow500,
+            textColor: Theme.of(context).colorScheme.onPrimaryFixed,
           ),
           Spacer(),
           CommonLabelTextWidget(
             text: value,
             fontWeight: FontWeight.w500,
             fontSize: 14.sp,
-            textColor: R.palette.yellow500,
+            textColor: Theme.of(context).colorScheme.onPrimaryFixed,
           ),
         ],
       ),
     );
   }
 
-  Widget noMiningHistoryCard() {
+  Widget noMiningHistoryCard(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16.sp),
       decoration: BoxDecoration(
-        color: R.palette.yellow900,
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: R.palette.yellow500),
       ),
@@ -92,20 +102,24 @@ class HistoryView extends GetView<HistoryViewModel> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.history, size: 48, color: R.palette.yellow300),
+            Icon(
+              Icons.history,
+              size: 48,
+              color: Theme.of(context).colorScheme.onSecondaryFixed,
+            ),
             24.verticalSpace,
             CommonLabelTextWidget(
               text: AppStrings.noMiningHistory,
               fontWeight: FontWeight.w500,
               fontSize: 14.sp,
-              textColor: R.palette.yellow100,
+              textColor: Theme.of(context).colorScheme.onPrimaryFixedVariant,
             ),
             24.verticalSpace,
             CommonLabelTextWidget(
               text: AppStrings.startMiningNow,
               fontWeight: FontWeight.w500,
               fontSize: 12.sp,
-              textColor: R.palette.yellow300,
+              textColor: Theme.of(context).colorScheme.onSecondaryFixed,
             ),
           ],
         ),
