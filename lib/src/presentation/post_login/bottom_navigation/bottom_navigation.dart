@@ -106,35 +106,35 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
                         ),
                       ),
                     ],
-                  ),
+                  ).paddingSymmetric(horizontal: 16.w),
                   6.verticalSpace,
                   CommonLabelTextWidget(
                     text: AppStrings.mineGoldBuildFortune,
                     fontWeight: FontWeight.w600,
                     fontSize: 14.sp,
                     textColor: R.palette.yellow400,
-                  ),
+                  ).paddingSymmetric(horizontal: 16.w),
                   16.verticalSpace,
-                  tabBarWidget(controller),
+                  tabBarWidget(controller).paddingSymmetric(horizontal: 16.w),
                   12.verticalSpace,
                   Expanded(
                     child: controller.state.when(
                       homeState: () {
-                        return HomeView();
+                        return HomeView().paddingSymmetric(horizontal: 16.w);
                       },
                       referralState: () {
                         return ReferralView();
                       },
                       historyState: () {
-                        return HistoryView();
+                        return HistoryView().paddingSymmetric(horizontal: 16.w);
                       },
                       settingsState: () {
-                        return ProfileView();
+                        return ProfileView().paddingSymmetric(horizontal: 16.w);
                       },
                     ),
                   ),
                 ],
-              ).paddingSymmetric(horizontal: 16.w, vertical: 16.h);
+              ).paddingSymmetric(vertical: 16.h);
             },
           ),
         ),

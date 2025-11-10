@@ -44,7 +44,7 @@ ThemeData _createLightThemeData(Palette palette) {
       onSecondaryFixed: Colors.grey.shade800,
       onSecondaryFixedVariant: Colors.grey.shade700,
       onTertiary: Colors.grey.shade800,
-      onPrimaryContainer: Colors.grey.shade700,
+      onPrimaryContainer: Colors.grey.shade400,
     ),
     scaffoldBackgroundColor: palette.background,
     dividerColor: palette.divider,
