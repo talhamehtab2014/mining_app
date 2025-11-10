@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CommonLabelTextWidget extends StatelessWidget {
-  String text;
-  FontWeight fontWeight;
-  double fontSize;
-  Color textColor;
-  double textHeight;
-  TextAlign textAlign;
-  TextDirection? textDirection;
-  double padding;
-  String? fontFamily;
-  int? maxLines;
+  final String text;
+  final FontWeight fontWeight;
+  final double fontSize;
+  final Color textColor;
+  final double textHeight;
+  final TextAlign textAlign;
+  final TextDirection? textDirection;
+  final double padding;
+  final String? fontFamily;
+  final int? maxLines;
 
-  CommonLabelTextWidget({
+  const CommonLabelTextWidget({
     super.key,
     required this.text,
     required this.fontWeight,
