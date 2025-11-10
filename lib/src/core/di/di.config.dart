@@ -22,6 +22,8 @@ import 'package:mining_application/src/core/services/network/network_constants.d
     as _i356;
 import 'package:mining_application/src/core/services/network/pretty_dio_logger.dart'
     as _i766;
+import 'package:mining_application/src/core/services/theme_service/theme_service.dart'
+    as _i396;
 import 'package:mining_application/src/core/utils/constants.dart' as _i138;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
@@ -45,6 +47,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i895.Connectivity>(() => modulesInjector.connectivity);
     gh.lazySingleton<_i138.Constants>(() => _i138.Constants());
+    gh.lazySingleton<_i396.ThemeService>(
+      () => _i396.ThemeService(gh<_i460.SharedPreferences>()),
+    );
     gh.lazySingleton<_i356.NetworkConstants>(
       () => _i356.NetworkConstants(gh<_i157.BaseEnv>()),
     );

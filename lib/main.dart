@@ -8,6 +8,7 @@ import 'package:mining_application/my_app.dart';
 import 'package:mining_application/src/core/di/di.dart';
 import 'package:mining_application/src/core/enum/enums.dart';
 import 'package:mining_application/src/core/resource/r.dart';
+import 'package:mining_application/src/core/services/theme_service/theme_service.dart';
 import 'package:mining_application/src/core/utils/constants.dart';
 
 import 'firebase_options.dart';
@@ -26,7 +27,13 @@ void main() {
         statusBarColor: Colors.transparent, // transparent status bar
       ),
     );
+
+    //Setting initialTheme
+    // register ThemeService and initialize it
+    final themeService = sl.get<ThemeService>();
+    themeService.initTheme();
+
     await ScreenUtil.ensureScreenSize();
     runApp(const MyApp());
-  }, (exception, stack) {},);
+  }, (exception, stack) {});
 }

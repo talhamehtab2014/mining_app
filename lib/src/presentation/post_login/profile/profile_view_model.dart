@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mining_application/src/core/di/di.dart';
+import 'package:mining_application/src/core/services/theme_service/theme_service.dart';
 import 'package:mining_application/src/presentation/post_login/profile/models/action/profile_view_action.dart';
 import 'package:mining_application/src/presentation/post_login/profile/models/profile_model.dart';
 import 'package:mining_application/src/presentation/post_login/profile/models/state/profile_view_state.dart';
@@ -31,22 +34,39 @@ class ProfileViewModel extends GetxController {
     action.when(
       editProfile: (isEditable) {
         state.maybeMap(
-            initial: (data) => _updateModel((m) => m.copyWith(isProfileEdited: isEditable)),
-            orElse: () => state);
+          initial: (data) =>
+              _updateModel((m) => m.copyWith(isProfileEdited: isEditable)),
+          orElse: () => state,
+        );
       },
       saveChanges: () {},
-      toggleTheme: () {},
+      toggleTheme: () async {
+        final themeService = sl.get<ThemeService>();
+
+        await themeService.setTheme(
+          themeService.getTheme() == ThemeMode.light
+              ? ThemeMode.dark
+              : ThemeMode.light,
+        );
+
+        state.maybeMap(
+          initial: (data) => _updateModel(
+            (m) => m.copyWith(
+              isDarkMode: themeService.getTheme() == ThemeMode.dark,
+            ),
+          ),
+          orElse: () => state,
+        );
+      },
       logout: () {},
     );
     update();
   }
 
-  void _updateModel(
-      ProfileModel Function(ProfileModel) transform,
-      ) {
+  void _updateModel(ProfileModel Function(ProfileModel) transform) {
     state = state.maybeMap(
       initial: (s) {
-        final current = s.profileModel ??  ProfileModel();
+        final current = s.profileModel ?? ProfileModel();
         final updated = transform(current);
         if (updated == current) return s;
         return s.copyWith(profileModel: updated);
@@ -54,7 +74,7 @@ class ProfileViewModel extends GetxController {
       orElse: () {
         final base = transform(ProfileModel());
         return ProfileViewState.initial(
-           base,
+          base,
           // ...provide any other required fields for dataLoaded here
         );
       },

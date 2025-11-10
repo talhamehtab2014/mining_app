@@ -29,7 +29,7 @@ class ProfileView extends StatelessWidget {
                 children: [
                   editProfileCard(context, controller, state),
                   16.verticalSpace,
-                  darkLightSwitcher(context, state),
+                  darkLightSwitcher(context, state, controller),
                   16.verticalSpace,
                   profileTopHeaderCard(context),
                   16.verticalSpace,
@@ -135,7 +135,11 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget darkLightSwitcher(BuildContext context, ProfileModel? state) {
+  Widget darkLightSwitcher(
+    BuildContext context,
+    ProfileModel? state,
+    ProfileViewModel controller,
+  ) {
     return Container(
       padding: EdgeInsets.all(16.sp),
       decoration: BoxDecoration(
@@ -158,7 +162,9 @@ class ProfileView extends StatelessWidget {
               ),
               12.verticalSpace,
               CommonLabelTextWidget(
-                text: false ? AppStrings.light : AppStrings.dark,
+                text: state?.isDarkMode == false
+                    ? AppStrings.light
+                    : AppStrings.dark,
                 fontWeight: FontWeight.w500,
                 fontSize: 14.sp,
                 textColor: Theme.of(context).colorScheme.onSecondaryFixed,
@@ -167,7 +173,9 @@ class ProfileView extends StatelessWidget {
           ),
           8.horizontalSpace,
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              controller.onAction(ProfileViewAction.toggleTheme());
+            },
             child: Container(
               padding: EdgeInsets.all(8.sp),
               decoration: BoxDecoration(
@@ -178,7 +186,9 @@ class ProfileView extends StatelessWidget {
                 border: Border.all(color: R.palette.yellow500),
               ),
               child: Icon(
-                true ? Icons.wb_sunny_outlined : Icons.nightlight_round,
+                state?.isDarkMode == false
+                    ? Icons.wb_sunny_outlined
+                    : Icons.nightlight_round,
                 color: R.palette.yellow950,
                 size: 16.sp,
               ),
