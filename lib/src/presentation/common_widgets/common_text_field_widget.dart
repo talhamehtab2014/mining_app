@@ -41,7 +41,7 @@ class CommonTextFieldWidget extends StatelessWidget {
           decoration: BoxDecoration(
             color: isEnabled
                 ? Theme.of(context).colorScheme.onSecondary
-                : R.palette.yellow800,
+                : Theme.of(context).colorScheme.onPrimary,
             borderRadius: BorderRadius.circular(8.r),
             border: Border.all(color: R.palette.borderOrDivider, width: 1.w),
           ),

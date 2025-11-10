@@ -27,11 +27,11 @@ class ProfileView extends StatelessWidget {
             child: controller.state.maybeWhen(
               initial: (state) => Column(
                 children: [
-                  editProfileCard(controller, state),
+                  editProfileCard(context, controller, state),
                   16.verticalSpace,
-                  darkLightSwitcher(state),
+                  darkLightSwitcher(context, state),
                   16.verticalSpace,
-                  profileTopHeaderCard(),
+                  profileTopHeaderCard(context),
                   16.verticalSpace,
                   logoutButton(context),
                 ],
@@ -44,11 +44,15 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget editProfileCard(ProfileViewModel controller, ProfileModel? state) {
+  Widget editProfileCard(
+    BuildContext context,
+    ProfileViewModel controller,
+    ProfileModel? state,
+  ) {
     return Container(
       padding: EdgeInsets.all(16.sp),
       decoration: BoxDecoration(
-        color: R.palette.yellow900,
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: R.palette.yellow500),
       ),
@@ -61,35 +65,48 @@ class ProfileView extends StatelessWidget {
                 text: AppStrings.profileInformation,
                 fontWeight: FontWeight.w500,
                 fontSize: 16.sp,
-                textColor: R.palette.yellow100,
+                textColor: Theme.of(context).colorScheme.onPrimaryFixedVariant,
               ),
               state?.isProfileEdited == true
                   ? Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        actionButtons(false, AppStrings.cancel, () {
-                          controller.onAction(
-                            ProfileViewAction.editProfile(
-                              !(state?.isProfileEdited ?? false),
-                            ),
-                          );
-                        }, R.palette.red600),
+                        actionButtons(
+                          false,
+                          AppStrings.cancel,
+                          () {
+                            controller.onAction(
+                              ProfileViewAction.editProfile(
+                                !(state?.isProfileEdited ?? false),
+                              ),
+                            );
+                          },
+                          R.palette.red600,
+                          null,
+                        ),
                         6.horizontalSpace,
                         actionButtons(
                           false,
                           AppStrings.save,
                           () {},
-                          R.palette.yellow700,
+                          Theme.of(context).colorScheme.secondary,
+                          Theme.of(context).colorScheme.tertiary,
                         ),
                       ],
                     )
-                  : actionButtons(true, AppStrings.edit, () {
-                      controller.onAction(
-                        ProfileViewAction.editProfile(
-                          !(state?.isProfileEdited ?? false),
-                        ),
-                      );
-                    }, R.palette.yellow700),
+                  : actionButtons(
+                      true,
+                      AppStrings.edit,
+                      () {
+                        controller.onAction(
+                          ProfileViewAction.editProfile(
+                            !(state?.isProfileEdited ?? false),
+                          ),
+                        );
+                      },
+                      Theme.of(context).colorScheme.secondary,
+                      Theme.of(context).colorScheme.onTertiary,
+                    ),
             ],
           ),
           16.verticalSpace,
@@ -118,11 +135,11 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget darkLightSwitcher(ProfileModel? state) {
+  Widget darkLightSwitcher(BuildContext context, ProfileModel? state) {
     return Container(
       padding: EdgeInsets.all(16.sp),
       decoration: BoxDecoration(
-        color: R.palette.yellow900,
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: R.palette.yellow500),
       ),
@@ -137,14 +154,14 @@ class ProfileView extends StatelessWidget {
                 text: AppStrings.appearance,
                 fontWeight: FontWeight.w500,
                 fontSize: 16.sp,
-                textColor: R.palette.yellow100,
+                textColor: Theme.of(context).colorScheme.onPrimaryFixedVariant,
               ),
               12.verticalSpace,
               CommonLabelTextWidget(
                 text: false ? AppStrings.light : AppStrings.dark,
                 fontWeight: FontWeight.w500,
                 fontSize: 14.sp,
-                textColor: R.palette.yellow300,
+                textColor: Theme.of(context).colorScheme.onSecondaryFixed,
               ),
             ],
           ),
@@ -172,11 +189,11 @@ class ProfileView extends StatelessWidget {
     );
   }
 
-  Widget profileTopHeaderCard() {
+  Widget profileTopHeaderCard(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16.sp),
       decoration: BoxDecoration(
-        color: R.palette.yellow900,
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: R.palette.yellow500),
       ),
@@ -187,33 +204,33 @@ class ProfileView extends StatelessWidget {
             text: AppStrings.aboutAUMining,
             fontWeight: FontWeight.w500,
             fontSize: 16.sp,
-            textColor: R.palette.yellow100,
+            textColor: Theme.of(context).colorScheme.onPrimaryFixedVariant,
           ),
           32.verticalSpace,
-          versionRowItem(AppStrings.version, "1.0.0 (MVP)"),
+          versionRowItem(context, AppStrings.version, "1.0.0 (MVP)"),
           8.verticalSpace,
-          versionRowItem(AppStrings.miningCycle, '24 Hours'),
+          versionRowItem(context, AppStrings.miningCycle, '24 Hours'),
           8.verticalSpace,
-          versionRowItem(AppStrings.tokenSymbol, 'AU'),
+          versionRowItem(context, AppStrings.tokenSymbol, 'AU'),
         ],
       ),
     );
   }
 
-  Widget versionRowItem(title, value) => Row(
+  Widget versionRowItem(BuildContext context, title, value) => Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
       CommonLabelTextWidget(
         text: title,
         fontWeight: FontWeight.w500,
         fontSize: 14.sp,
-        textColor: R.palette.yellow300,
+        textColor: Theme.of(context).colorScheme.onSecondaryFixed,
       ),
       CommonLabelTextWidget(
         text: value,
         fontWeight: FontWeight.w500,
         fontSize: 14.sp,
-        textColor: R.palette.yellow100,
+        textColor: Theme.of(context).colorScheme.onPrimaryFixedVariant,
       ),
     ],
   );
@@ -223,6 +240,7 @@ class ProfileView extends StatelessWidget {
     String title,
     VoidCallback callback,
     Color color,
+    Color? textColor,
   ) => GestureDetector(
     onTap: callback,
     child: Container(
@@ -242,7 +260,7 @@ class ProfileView extends StatelessWidget {
             text: title,
             fontWeight: FontWeight.w500,
             fontSize: 12.sp,
-            textColor: R.palette.yellow100,
+            textColor: textColor ?? R.palette.yellow100,
           ),
         ],
       ),
@@ -258,7 +276,7 @@ class ProfileView extends StatelessWidget {
               side: BorderSide(color: R.palette.yellow500),
               borderRadius: BorderRadius.circular(8.r),
             ),
-            backgroundColor: R.palette.yellow950,
+            backgroundColor: Theme.of(context).colorScheme.onSecondary,
             child: Container(
               padding: EdgeInsets.all(16.sp),
               child: Column(
@@ -268,14 +286,16 @@ class ProfileView extends StatelessWidget {
                     text: 'Are you sure you want to logout?',
                     fontWeight: FontWeight.w500,
                     fontSize: 14.sp,
-                    textColor: R.palette.yellow100,
+                    textColor: Theme.of(
+                      context,
+                    ).colorScheme.onPrimaryFixedVariant,
                   ),
                   16.verticalSpace,
                   CommonLabelTextWidget(
                     text: 'You\'ll need to login again to access your account.',
                     fontWeight: FontWeight.w500,
                     fontSize: 12.sp,
-                    textColor: R.palette.yellow300,
+                    textColor: Theme.of(context).colorScheme.onSecondaryFixed,
                     maxLines: 2,
                     textAlign: TextAlign.center,
                     textHeight: 1.2,
@@ -309,7 +329,7 @@ class ProfileView extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 8.h),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: R.palette.yellow900,
+          color: Theme.of(context).colorScheme.onSecondary,
           border: Border.all(color: R.palette.blackColor, width: 0.5),
           borderRadius: BorderRadius.circular(8.r),
         ),
