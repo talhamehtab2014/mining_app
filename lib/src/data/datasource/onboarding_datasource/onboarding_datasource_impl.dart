@@ -3,6 +3,7 @@ import 'package:mining_application/src/core/network/network_call.dart';
 import 'package:mining_application/src/core/network/network_constants.dart';
 import 'package:mining_application/src/core/utils/constants.dart';
 import 'package:mining_application/src/data/datasource/onboarding_datasource/onboarding_datasource.dart';
+import 'package:mining_application/src/presentation/pre_login/models/signup_request_model.dart';
 
 @LazySingleton(as: OnBoardingDataSource)
 class OnBoardingDataSourceImpl extends OnBoardingDataSource {
@@ -17,13 +18,13 @@ class OnBoardingDataSourceImpl extends OnBoardingDataSource {
   });
 
   @override
-  Future SignIn(params) {
+  Future signIn(params) {
     // TODO: implement SignIn
     throw UnimplementedError();
   }
 
   @override
-  Future SignUp(params) {
+  Future signUp(SignupRequestModel params) {
     // TODO: implement SignUp
     throw UnimplementedError();
   }

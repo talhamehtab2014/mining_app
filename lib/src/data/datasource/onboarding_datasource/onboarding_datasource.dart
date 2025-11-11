@@ -1,5 +1,7 @@
-abstract class OnBoardingDataSource {
-  Future<dynamic> SignIn(dynamic params);
+import 'package:mining_application/src/presentation/pre_login/models/signup_request_model.dart';
 
-  Future<dynamic> SignUp(dynamic params);
+abstract class OnBoardingDataSource {
+  Future<dynamic> signIn(dynamic params);
+
+  Future<dynamic> signUp(SignupRequestModel params);
 }
