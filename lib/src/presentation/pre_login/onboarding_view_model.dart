@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:mining_application/src/core/enum/enums.dart';
+import 'package:mining_application/src/core/di/di.dart';
 import 'package:mining_application/src/core/utils/routes.dart';
+import 'package:mining_application/src/core/services/auth_service/auth_service.dart';
 import 'package:mining_application/src/presentation/pre_login/models/actions/onboarding_action.dart';
 import 'package:mining_application/src/presentation/pre_login/models/state/onboarding_state.dart';
 
@@ -20,7 +22,7 @@ class OnboardingViewModel extends GetxController {
     print("OnboardingViewModel Created.");
   }
 
-  onAction(OnboardingAction action) {
+  Future<void> onAction(OnboardingAction action) async {
     action.when(
       loginRadioButton: () {
         _state = state.copyWith(state: OnboardingStateEnum.login);
@@ -30,8 +32,24 @@ class OnboardingViewModel extends GetxController {
         _state = state.copyWith(state: OnboardingStateEnum.signup);
         update();
       },
-      loginWithGoogle: () {
-        Get.offAndToNamed(Routes().getBottomNavigationPage());
+      loginWithGoogle: () async {
+        final auth = sl.get<AuthService>();
+        try {
+          final credential = await auth.signInWithGoogle();
+          if (credential != null) {
+            Get.offAndToNamed(Routes().getBottomNavigationPage());
+          } else {
+            // User cancelled; optionally show a message
+          }
+        } catch (e) {
+          e.printError();
+          Get.snackbar(
+            "Google Sign-In failed",
+            e.toString(),
+            snackPosition: SnackPosition.BOTTOM,
+            duration: const Duration(seconds: 3),
+          );
+        }
       },
       loginWithPhone: () {
         Get.offAndToNamed(Routes().getBottomNavigationPage());

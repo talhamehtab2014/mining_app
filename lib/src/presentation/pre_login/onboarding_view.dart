@@ -15,8 +15,13 @@ import 'models/actions/onboarding_action.dart';
 
 class OnboardingView extends StatelessWidget {
   static const String id = '/OnboardingView';
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController phoneNumController = TextEditingController();
+  final TextEditingController referralCodeController = TextEditingController();
 
-  const OnboardingView({super.key});
+  OnboardingView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -259,33 +264,34 @@ class OnboardingView extends StatelessWidget {
       children: [
         CommonTextFieldWidget(
           labelText: AppStrings.name,
-          controller: TextEditingController(),
+          controller: nameController,
           hintText: AppStrings.nameHint,
         ),
         12.verticalSpace,
         CommonTextFieldWidget(
           labelText: AppStrings.emailLabel,
-          controller: TextEditingController(),
+          controller: emailController,
           hintText: AppStrings.emailHint,
+          keyboardType: TextInputType.emailAddress,
         ),
         12.verticalSpace,
         CommonTextFieldWidget(
           labelText: AppStrings.passwordLabel,
-          controller: TextEditingController(),
+          controller: passwordController,
           hintText: AppStrings.passwordHint,
           isPassword: true,
         ),
         16.verticalSpace,
         CommonTextFieldWidget(
           labelText: AppStrings.phoneOptional,
-          controller: TextEditingController(),
+          controller: phoneNumController,
           hintText: AppStrings.phoneOptionalHint,
           keyboardType: TextInputType.phone,
         ),
         12.verticalSpace,
         CommonTextFieldWidget(
           labelText: AppStrings.referral,
-          controller: TextEditingController(),
+          controller: referralCodeController,
           hintText: AppStrings.referralHint,
         ),
         16.verticalSpace,
