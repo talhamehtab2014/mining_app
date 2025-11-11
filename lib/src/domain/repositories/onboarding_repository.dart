@@ -2,7 +2,7 @@ import 'package:mining_application/src/presentation/pre_login/models/signup_requ
 
 abstract class OnBoardingRepository {
 
-  Future<dynamic> signIn();
+  Future<dynamic> signIn(dynamic params);
   Future<dynamic> signUp(SignupRequestModel params);
 
 

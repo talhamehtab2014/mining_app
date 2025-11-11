@@ -1,20 +1,31 @@
 import 'package:get/get.dart';
-import 'package:mining_application/src/core/enum/enums.dart';
 import 'package:mining_application/src/core/di/di.dart';
-import 'package:mining_application/src/core/utils/routes.dart';
+import 'package:mining_application/src/core/enum/enums.dart';
 import 'package:mining_application/src/core/services/auth_service/auth_service.dart';
+import 'package:mining_application/src/core/utils/routes.dart';
+import 'package:mining_application/src/domain/usecase/onboarding/onboarding_signin_usecase.dart';
 import 'package:mining_application/src/presentation/pre_login/models/actions/onboarding_action.dart';
 import 'package:mining_application/src/presentation/pre_login/models/signup_request_model.dart';
 import 'package:mining_application/src/presentation/pre_login/models/state/onboarding_state.dart';
 
+import '../../domain/usecase/onboarding/onboarding_signup_usecase.dart';
+
 class OnboardingViewModel extends GetxController {
   final String title = "Onboarding View Model";
+  final OnboardingSignInUseCase _onboardingSignInUseCase;
+  final OnboardingSignUpUseCase _onboardingSignUpUseCase;
 
   OnBoardingState _state = OnBoardingState.updateState(
     OnboardingStateEnum.login,
   );
 
   OnBoardingState get state => _state;
+
+  OnboardingViewModel( {
+    required OnboardingSignInUseCase onboardingSignInUseCase,
+    required OnboardingSignUpUseCase onboardingSignUpUseCase,
+  }) : _onboardingSignInUseCase = onboardingSignInUseCase,
+       _onboardingSignUpUseCase = onboardingSignUpUseCase;
 
   @override
   void onInit() {
@@ -55,8 +66,19 @@ class OnboardingViewModel extends GetxController {
       loginWithPhone: () {
         Get.offAndToNamed(Routes().getBottomNavigationPage());
       },
-      signupWithEmail: (SignupRequestModel reqModel) {
-        Get.offAndToNamed(Routes().getBottomNavigationPage());
+      signupWithEmail: (SignupRequestModel reqModel)async {
+        try {
+         final res = await _onboardingSignUpUseCase(reqModel);
+         print(res);
+        } catch (e) {
+          e.printError();
+          Get.snackbar(
+            "Google Sign-In failed",
+            e.toString(),
+            snackPosition: SnackPosition.BOTTOM,
+            duration: const Duration(seconds: 3),
+          );
+        }
       },
       loginWithEmail: () {
         Get.offAndToNamed(Routes().getBottomNavigationPage());

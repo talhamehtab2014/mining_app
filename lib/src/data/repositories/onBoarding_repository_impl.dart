@@ -11,8 +11,8 @@ class OnBoardingRepositoryImpl extends OnBoardingRepository {
     : _onBoardingDataSource = onboardingDataSource;
 
   @override
-  Future signIn() {
-    return _onBoardingDataSource.signIn({});
+  Future signIn(dynamic params) {
+    return _onBoardingDataSource.signIn(params);
   }
 
   @override
