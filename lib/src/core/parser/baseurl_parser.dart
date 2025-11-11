@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:mining_application/src/core/extensions/map_extension.dart';
-import 'package:mining_application/src/core/services/network/network_constants.dart';
+import 'package:mining_application/src/core/network/network_constants.dart';
 
 @lazySingleton
 class BaseUrlParser {

@@ -8,6 +8,7 @@ import 'package:mining_application/src/core/resource/r.dart';
 import 'package:mining_application/src/presentation/common_widgets/common_button_widget.dart';
 import 'package:mining_application/src/presentation/common_widgets/common_label_text_widget.dart';
 import 'package:mining_application/src/presentation/common_widgets/common_text_field_widget.dart';
+import 'package:mining_application/src/presentation/pre_login/models/signup_request_model.dart';
 import 'package:mining_application/src/presentation/pre_login/models/state/onboarding_state.dart';
 import 'package:mining_application/src/presentation/pre_login/onboarding_view_model.dart';
 
@@ -298,7 +299,15 @@ class OnboardingView extends StatelessWidget {
         ButtonWithRadiusWidget(
           buttonTitle: AppStrings.signUpWithEmail,
           callback: () {
-            controller.onAction(OnboardingAction.signupWithEmail());
+            SignupRequestModel reqModel = SignupRequestModel(
+              strEmail: emailController.text,
+              strName: nameController.text,
+              strPassword: passwordController.text,
+              strPhoneNumber: phoneNumController.text,
+              strReferralCode: referralCodeController.text,
+            );
+
+            controller.onAction(OnboardingAction.signupWithEmail(reqModel));
           },
           borderRadius: 6.r,
           iconWidget: FaIcon(FontAwesomeIcons.envelope),

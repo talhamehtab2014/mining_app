@@ -38,7 +38,7 @@ class Routes {
     ),
     GetPage(
       name: OnboardingView.id,
-      page: () => const OnboardingView(),
+      page: () => OnboardingView(),
       transition: Transition.cupertino,
     ),
     GetPage(

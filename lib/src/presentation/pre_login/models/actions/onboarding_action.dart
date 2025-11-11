@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mining_application/src/presentation/pre_login/models/signup_request_model.dart';
 
 part 'onboarding_action.freezed.dart';
 
@@ -12,7 +13,9 @@ abstract class OnboardingAction with _$OnboardingAction {
 
   const factory OnboardingAction.loginWithPhone() = LoginWithPhone;
 
-  const factory OnboardingAction.signupWithEmail() = SignupWithEmail;
+  const factory OnboardingAction.signupWithEmail(
+    SignupRequestModel requestModel,
+  ) = SignupWithEmail;
 
   const factory OnboardingAction.loginWithEmail() = LoginWithEmail;
 }

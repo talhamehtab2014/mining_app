@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:mining_application/src/core/services/network/network_constants.dart';
+import 'package:mining_application/src/core/network/network_constants.dart';
 
 class GenericInterceptor extends Interceptor {
   final Dio _dio;

@@ -4,6 +4,7 @@ import 'package:mining_application/src/core/di/di.dart';
 import 'package:mining_application/src/core/utils/routes.dart';
 import 'package:mining_application/src/core/services/auth_service/auth_service.dart';
 import 'package:mining_application/src/presentation/pre_login/models/actions/onboarding_action.dart';
+import 'package:mining_application/src/presentation/pre_login/models/signup_request_model.dart';
 import 'package:mining_application/src/presentation/pre_login/models/state/onboarding_state.dart';
 
 class OnboardingViewModel extends GetxController {
@@ -54,7 +55,7 @@ class OnboardingViewModel extends GetxController {
       loginWithPhone: () {
         Get.offAndToNamed(Routes().getBottomNavigationPage());
       },
-      signupWithEmail: () {
+      signupWithEmail: (SignupRequestModel reqModel) {
         Get.offAndToNamed(Routes().getBottomNavigationPage());
       },
       loginWithEmail: () {

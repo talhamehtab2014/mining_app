@@ -12,7 +12,20 @@
           "package_name": "com.example.mining_application"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1080476079769-1fkp8gs820j391nphrfblut82pm2kvmq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mining_application",
+            "certificate_hash": "cce2c0ad204ce530318e0655058c8735b2e2fdac"
+          }
+        },
+        {
+          "client_id": "1080476079769-b3out8cibdmmdn0dbmunmljaj8vp34tb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBiGxctN6kcMtmSoAkE9wd2mwf-y0OkGyo"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1080476079769-b3out8cibdmmdn0dbmunmljaj8vp34tb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1080476079769-th0ijvi0p2bdqp8o6jtajpqo726r6dln.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.miningApplication"
+              }
+            }
+          ]
         }
       }
     }
