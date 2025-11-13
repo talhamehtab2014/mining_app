@@ -86,7 +86,7 @@ class OnboardingViewModel extends GetxController {
     } catch (e) {
       e.printError();
       Get.snackbar(
-        "Google Sign-In failed",
+        "Sign-In failed",
         e.toString(),
         snackPosition: SnackPosition.BOTTOM,
         duration: const Duration(seconds: 3),
@@ -106,7 +106,7 @@ class OnboardingViewModel extends GetxController {
     } catch (e) {
       e.printError();
       Get.snackbar(
-        "Google Sign-In failed",
+        "Sign-up failed",
         e.toString(),
         snackPosition: SnackPosition.BOTTOM,
         duration: const Duration(seconds: 3),
