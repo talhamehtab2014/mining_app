@@ -17,5 +17,5 @@ abstract class OnboardingAction with _$OnboardingAction {
     SignupRequestModel requestModel,
   ) = SignupWithEmail;
 
-  const factory OnboardingAction.loginWithEmail() = LoginWithEmail;
+  const factory OnboardingAction.loginWithEmail(String email, String password) = LoginWithEmail;
 }

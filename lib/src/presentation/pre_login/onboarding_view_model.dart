@@ -21,7 +21,7 @@ class OnboardingViewModel extends GetxController {
 
   OnBoardingState get state => _state;
 
-  OnboardingViewModel( {
+  OnboardingViewModel({
     required OnboardingSignInUseCase onboardingSignInUseCase,
     required OnboardingSignUpUseCase onboardingSignUpUseCase,
   }) : _onboardingSignInUseCase = onboardingSignInUseCase,
@@ -66,23 +66,38 @@ class OnboardingViewModel extends GetxController {
       loginWithPhone: () {
         Get.offAndToNamed(Routes().getBottomNavigationPage());
       },
-      signupWithEmail: (SignupRequestModel reqModel)async {
-        try {
-         final res = await _onboardingSignUpUseCase(reqModel);
-         print(res);
-        } catch (e) {
-          e.printError();
-          Get.snackbar(
-            "Google Sign-In failed",
-            e.toString(),
-            snackPosition: SnackPosition.BOTTOM,
-            duration: const Duration(seconds: 3),
-          );
-        }
-      },
-      loginWithEmail: () {
-        Get.offAndToNamed(Routes().getBottomNavigationPage());
-      },
+      signupWithEmail: _signUpWithEmailAndPassword,
+      loginWithEmail: _loginWithEmailAndPassword,
     );
+  }
+
+  void _loginWithEmailAndPassword(String email, String password) async{
+    try {
+      final res = await _onboardingSignInUseCase(reqModel);
+      print(res);
+    } catch (e) {
+      e.printError();
+      Get.snackbar(
+        "Google Sign-In failed",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 3),
+      );
+    }
+  }
+
+  void _signUpWithEmailAndPassword(SignupRequestModel reqModel) async {
+    try {
+      final res = await _onboardingSignUpUseCase(reqModel);
+      print(res);
+    } catch (e) {
+      e.printError();
+      Get.snackbar(
+        "Google Sign-In failed",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 3),
+      );
+    }
   }
 }
