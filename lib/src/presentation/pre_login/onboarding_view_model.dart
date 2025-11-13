@@ -18,9 +18,14 @@ class OnboardingViewModel extends GetxController {
 
   OnBoardingState _state = OnBoardingState.updateState(
     OnboardingStateEnum.login,
+    false
   );
 
   OnBoardingState get state => _state;
+
+  set state(OnBoardingState value) {
+    _state = value;
+  }
 
   OnboardingViewModel({
     required OnboardingSignInUseCase onboardingSignInUseCase,
@@ -73,6 +78,8 @@ class OnboardingViewModel extends GetxController {
   }
 
   void _loginWithEmailAndPassword(String email, String password) async{
+    _state = state.copyWith(isLoading: true);
+    update();
     try {
       final res = await _onboardingSignInUseCase(LoginRequestModel(strEmail: email, strPassword: password));
       print(res);
@@ -84,10 +91,15 @@ class OnboardingViewModel extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
         duration: const Duration(seconds: 3),
       );
+    } finally{
+      _state = state.copyWith(isLoading: false);
+      update();
     }
   }
 
   void _signUpWithEmailAndPassword(SignupRequestModel reqModel) async {
+    _state = state.copyWith(isLoading: true);
+    update();
     try {
       final res = await _onboardingSignUpUseCase(reqModel);
       print(res);
@@ -99,6 +111,9 @@ class OnboardingViewModel extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
         duration: const Duration(seconds: 3),
       );
+    } finally{
+      _state = state.copyWith(isLoading: false);
+      update();
     }
   }
 }

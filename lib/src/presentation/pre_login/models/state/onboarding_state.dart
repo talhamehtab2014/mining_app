@@ -5,6 +5,6 @@ part 'onboarding_state.freezed.dart';
 
 @freezed
 abstract class OnBoardingState with _$OnBoardingState {
-  factory OnBoardingState.updateState(OnboardingStateEnum state) =
+  factory OnBoardingState.updateState(OnboardingStateEnum state, bool isLoading) =
       _OnBoardingUpdateState;
 }
