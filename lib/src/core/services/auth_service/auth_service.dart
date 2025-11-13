@@ -23,26 +23,68 @@ class AuthService {
   }
 
   /// Sign in with Google (works for sign in & sign up)
+  /// Returns `UserCredential` on success, `null` if user cancelled.
   Future<UserCredential?> signInWithGoogle() async {
     try {
       await init();
 
       // Interactive authentication
-      final GoogleSignInAccount googleUser = await _googleSignIn.authenticate();
+      // NOTE: make it nullable so we can detect cancel
+      final GoogleSignInAccount? googleUser =
+      await _googleSignIn.authenticate(); // or .signIn() depending on your setup
+
+      // User cancelled the Google picker
+      if (googleUser == null) {
+        return null;
+      }
 
       final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
+      await googleUser.authentication;
 
-      // google_sign_in ^7 returns only idToken via `authentication`.
-      // accessToken may be unavailable; Firebase accepts idToken alone.
+      // google_sign_in ^7 often only has idToken, which is enough
       final OAuthCredential credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
+        // accessToken: googleAuth.accessToken, // optional / may be null
       );
 
-      return await _auth.signInWithCredential(credential);
-    } on FirebaseAuthException {
-      rethrow;
-    } catch (_) {
+      final UserCredential userCredential =
+      await _auth.signInWithCredential(credential);
+
+      final User? user = userCredential.user;
+      if (user == null) return null;
+
+
+      final snapshot = await _dbRef.get();
+
+      if (!snapshot.exists) {
+        // New user – create profile
+        await _dbRef.set({
+          'name': user.displayName ?? '',
+          'email': user.email ?? '',
+          'phone': user.phoneNumber ?? '',
+          'referralCode': '',
+          'totalBalance': 0,
+          'totalSessions': 0,
+          'totalReferrals': 0,
+          'earnedFromReferrals': 0,
+          'userReferralCode': '',
+          'joinedUsingReferral': [],
+          'miningHistory': [],
+          'createdAt': DateTime.now().toIso8601String(),
+        });
+      } else {
+        // Existing user – just update some fields
+        await _dbRef.update({
+          'name': user.displayName ?? '',
+        });
+      }
+
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      // Bubble up Firebase-specific errors to show in UI
+      throw e;
+    } catch (e) {
+      // For debugging / logging you could wrap or log here
       rethrow;
     }
   }

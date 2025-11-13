@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:mining_application/src/core/di/di.dart';
 import 'package:mining_application/src/core/enum/enums.dart';
-import 'package:mining_application/src/core/services/auth_service/auth_service.dart';
+import 'package:mining_application/src/core/usecase/usecase.dart';
 import 'package:mining_application/src/core/utils/routes.dart';
 import 'package:mining_application/src/domain/usecase/onboarding/onboarding_signin_usecase.dart';
+import 'package:mining_application/src/domain/usecase/onboarding/onboarding_signup_with_google_usecase.dart';
 import 'package:mining_application/src/presentation/pre_login/models/actions/onboarding_action.dart';
 import 'package:mining_application/src/presentation/pre_login/models/login_request_model.dart';
 import 'package:mining_application/src/presentation/pre_login/models/signup_request_model.dart';
@@ -15,6 +15,7 @@ class OnboardingViewModel extends GetxController {
   final String title = "Onboarding View Model";
   final OnboardingSignInUseCase _onboardingSignInUseCase;
   final OnboardingSignUpUseCase _onboardingSignUpUseCase;
+  final OnboardingSignUpWithGoogleUseCase _onboardingSignUpWithGoogleUseCase;
 
   OnBoardingState _state = OnBoardingState.updateState(
     OnboardingStateEnum.login,
@@ -30,8 +31,11 @@ class OnboardingViewModel extends GetxController {
   OnboardingViewModel({
     required OnboardingSignInUseCase onboardingSignInUseCase,
     required OnboardingSignUpUseCase onboardingSignUpUseCase,
+    required OnboardingSignUpWithGoogleUseCase
+    onboardingSignUpWithGoogleUseCase,
   }) : _onboardingSignInUseCase = onboardingSignInUseCase,
-       _onboardingSignUpUseCase = onboardingSignUpUseCase;
+       _onboardingSignUpUseCase = onboardingSignUpUseCase,
+       _onboardingSignUpWithGoogleUseCase = onboardingSignUpWithGoogleUseCase;
 
   @override
   void onInit() {
@@ -60,9 +64,10 @@ class OnboardingViewModel extends GetxController {
   }
 
   void _signupWithGoogleSSN() async {
-    final auth = sl.get<AuthService>();
+    _state = state.copyWith(isLoading: true);
+    update();
     try {
-      final credential = await auth.signInWithGoogle();
+      final credential = await _onboardingSignUpWithGoogleUseCase(NoParams());
       if (credential != null) {
         Get.offAndToNamed(Routes().getBottomNavigationPage());
       } else {
@@ -76,6 +81,9 @@ class OnboardingViewModel extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
         duration: const Duration(seconds: 3),
       );
+    } finally {
+      _state = state.copyWith(isLoading: false);
+      update();
     }
   }
 

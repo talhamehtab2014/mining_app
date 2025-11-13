@@ -4,10 +4,10 @@ import 'package:mining_application/src/domain/repositories/onboarding_repository
 import 'package:mining_application/src/presentation/pre_login/models/signup_request_model.dart';
 
 @lazySingleton
-class OnboardingSignUpUseCase extends UseCase<NoParams, dynamic> {
+class OnboardingSignUpWithGoogleUseCase extends UseCase<NoParams, dynamic> {
   final OnBoardingRepository _onboardingRepository;
 
-  OnboardingSignUpUseCase({required OnBoardingRepository onBoardingRepository})
+  OnboardingSignUpWithGoogleUseCase({required OnBoardingRepository onBoardingRepository})
     : _onboardingRepository = onBoardingRepository;
 
   @override
