@@ -12,7 +12,7 @@ class OnBoardingDataSourceImpl extends OnBoardingDataSource {
   OnBoardingDataSourceImpl({required this.authService});
 
   @override
-  Future signIn(LoginRequestModel params) async{
+  Future<Map<String, dynamic>?> signIn(LoginRequestModel params) async{
     return await authService.login(
       email: params.strEmail,
       password: params.strPassword,
@@ -20,7 +20,7 @@ class OnBoardingDataSourceImpl extends OnBoardingDataSource {
   }
 
   @override
-  Future signUp(SignupRequestModel params)async {
+  Future<Map<String, dynamic>?> signUp(SignupRequestModel params)async {
     return await authService.signUp(
       name: params.strName,
       email: params.strEmail,
@@ -31,7 +31,7 @@ class OnBoardingDataSourceImpl extends OnBoardingDataSource {
   }
 
   @override
-  Future signUpWithGoogle(NoParams params)async {
+  Future<Map<String, dynamic>?> signUpWithGoogle(NoParams params)async {
     return await authService.signInWithGoogle();
   }
 }

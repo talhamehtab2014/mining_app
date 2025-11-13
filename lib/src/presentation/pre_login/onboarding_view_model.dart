@@ -8,6 +8,7 @@ import 'package:mining_application/src/presentation/pre_login/models/actions/onb
 import 'package:mining_application/src/presentation/pre_login/models/login_request_model.dart';
 import 'package:mining_application/src/presentation/pre_login/models/signup_request_model.dart';
 import 'package:mining_application/src/presentation/pre_login/models/state/onboarding_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../domain/usecase/onboarding/onboarding_signup_usecase.dart';
 
@@ -16,6 +17,7 @@ class OnboardingViewModel extends GetxController {
   final OnboardingSignInUseCase _onboardingSignInUseCase;
   final OnboardingSignUpUseCase _onboardingSignUpUseCase;
   final OnboardingSignUpWithGoogleUseCase _onboardingSignUpWithGoogleUseCase;
+
 
   OnBoardingState _state = OnBoardingState.updateState(
     OnboardingStateEnum.login,
@@ -67,8 +69,8 @@ class OnboardingViewModel extends GetxController {
     _state = state.copyWith(isLoading: true);
     update();
     try {
-      final credential = await _onboardingSignUpWithGoogleUseCase(NoParams());
-      if (credential != null) {
+      final userData = await _onboardingSignUpWithGoogleUseCase(NoParams());
+      if (userData != null) {
         Get.offAndToNamed(Routes().getBottomNavigationPage());
       } else {
         // User cancelled; optionally show a message

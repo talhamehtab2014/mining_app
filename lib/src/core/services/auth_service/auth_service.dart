@@ -24,7 +24,7 @@ class AuthService {
 
   /// Sign in with Google (works for sign in & sign up)
   /// Returns `UserCredential` on success, `null` if user cancelled.
-  Future<UserCredential?> signInWithGoogle() async {
+  Future<Map<String, dynamic>?> signInWithGoogle() async {
     try {
       await init();
 
@@ -55,10 +55,11 @@ class AuthService {
 
 
       final snapshot = await _dbRef.get();
+      Map<String, dynamic> userData;
 
       if (!snapshot.exists) {
         // New user – create profile
-        await _dbRef.set({
+        userData = {
           'name': user.displayName ?? '',
           'email': user.email ?? '',
           'phone': user.phoneNumber ?? '',
@@ -71,15 +72,25 @@ class AuthService {
           'joinedUsingReferral': [],
           'miningHistory': [],
           'createdAt': DateTime.now().toIso8601String(),
-        });
+        };
+
+        await _dbRef.set(userData);
       } else {
-        // Existing user – just update some fields
+        // Existing user – update some fields
         await _dbRef.update({
           'name': user.displayName ?? '',
         });
+
+        // Start from existing data
+        final existing = snapshot.value as Map<dynamic, dynamic>;
+        userData = {
+          ...existing.map((key, value) => MapEntry(key.toString(), value)),
+          'name': user.displayName ?? existing['name'] ?? '',
+        };
       }
 
-      return userCredential;
+      // ✅ RETURN DB DATA, NOT CREDENTIALS
+      return userData;
     } on FirebaseAuthException catch (e) {
       // Bubble up Firebase-specific errors to show in UI
       throw e;
@@ -146,7 +157,7 @@ class AuthService {
   }
 
   /// SIGN UP
-  Future<User?> signUp({
+  Future<Map<String, dynamic>?> signUp({
     required String name,
     required String email,
     required String password,
@@ -164,8 +175,7 @@ class AuthService {
       final User? user = userCredential.user;
       if (user == null) return null;
 
-      // 2) Save user data in Realtime Database (excluding password)
-      await _dbRef.child(user.uid).set({
+      final userData = <String, dynamic>{
         'name': name,
         'email': email,
         'phone': phone,
@@ -178,12 +188,15 @@ class AuthService {
         'joinedUsingReferral': [],
         'miningHistory': [],
         'createdAt': DateTime.now().toIso8601String(),
-      });
+      };
+
+      // 2) Save user data in Realtime Database (excluding password)
+      await _dbRef.child(user.uid).set(userData);
 
       // 3) Optionally update displayName
       await user.updateDisplayName(name);
 
-      return user;
+      return userData;
     } on FirebaseAuthException catch (e) {
       // handle Firebase specific errors
       throw e.message ?? 'Signup failed';
