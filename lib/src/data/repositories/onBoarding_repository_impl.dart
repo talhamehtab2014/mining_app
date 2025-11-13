@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:mining_application/src/core/usecase/usecase.dart';
 import 'package:mining_application/src/data/datasource/onboarding_datasource/onboarding_datasource.dart';
 import 'package:mining_application/src/domain/repositories/onboarding_repository.dart';
 import 'package:mining_application/src/presentation/pre_login/models/login_request_model.dart';
@@ -19,5 +20,10 @@ class OnBoardingRepositoryImpl extends OnBoardingRepository {
   @override
   Future signUp(SignupRequestModel params) {
     return _onBoardingDataSource.signUp(params);
+  }
+
+  @override
+  Future signUpWithGoogle(NoParams params) {
+    return _onBoardingDataSource.signUpWithGoogle(params);
   }
 }

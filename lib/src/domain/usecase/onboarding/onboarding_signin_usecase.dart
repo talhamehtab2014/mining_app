@@ -8,11 +8,10 @@ class OnboardingSignInUseCase extends UseCase<LoginRequestModel, dynamic> {
   final OnBoardingRepository _onboardingRepository;
 
   OnboardingSignInUseCase({required OnBoardingRepository onBoardingRepository})
-      : _onboardingRepository = onBoardingRepository;
+    : _onboardingRepository = onBoardingRepository;
 
   @override
   Future call(LoginRequestModel params) {
     return _onboardingRepository.signIn(params);
   }
 }
-
