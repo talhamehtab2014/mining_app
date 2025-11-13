@@ -18,7 +18,7 @@ class OnboardingViewModel extends GetxController {
 
   OnBoardingState _state = OnBoardingState.updateState(
     OnboardingStateEnum.login,
-    false
+    false,
   );
 
   OnBoardingState get state => _state;
@@ -50,25 +50,7 @@ class OnboardingViewModel extends GetxController {
         _state = state.copyWith(state: OnboardingStateEnum.signup);
         update();
       },
-      loginWithGoogle: () async {
-        final auth = sl.get<AuthService>();
-        try {
-          final credential = await auth.signInWithGoogle();
-          if (credential != null) {
-            Get.offAndToNamed(Routes().getBottomNavigationPage());
-          } else {
-            // User cancelled; optionally show a message
-          }
-        } catch (e) {
-          e.printError();
-          Get.snackbar(
-            "Google Sign-In failed",
-            e.toString(),
-            snackPosition: SnackPosition.BOTTOM,
-            duration: const Duration(seconds: 3),
-          );
-        }
-      },
+      loginWithGoogle: _signupWithGoogleSSN,
       loginWithPhone: () {
         Get.offAndToNamed(Routes().getBottomNavigationPage());
       },
@@ -77,11 +59,33 @@ class OnboardingViewModel extends GetxController {
     );
   }
 
-  void _loginWithEmailAndPassword(String email, String password) async{
+  void _signupWithGoogleSSN() async {
+    final auth = sl.get<AuthService>();
+    try {
+      final credential = await auth.signInWithGoogle();
+      if (credential != null) {
+        Get.offAndToNamed(Routes().getBottomNavigationPage());
+      } else {
+        // User cancelled; optionally show a message
+      }
+    } catch (e) {
+      e.printError();
+      Get.snackbar(
+        "Google Sign-In failed",
+        e.toString(),
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 3),
+      );
+    }
+  }
+
+  void _loginWithEmailAndPassword(String email, String password) async {
     _state = state.copyWith(isLoading: true);
     update();
     try {
-      final res = await _onboardingSignInUseCase(LoginRequestModel(strEmail: email, strPassword: password));
+      final res = await _onboardingSignInUseCase(
+        LoginRequestModel(strEmail: email, strPassword: password),
+      );
       print(res);
     } catch (e) {
       e.printError();
@@ -91,7 +95,7 @@ class OnboardingViewModel extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
         duration: const Duration(seconds: 3),
       );
-    } finally{
+    } finally {
       _state = state.copyWith(isLoading: false);
       update();
     }
@@ -111,7 +115,7 @@ class OnboardingViewModel extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
         duration: const Duration(seconds: 3),
       );
-    } finally{
+    } finally {
       _state = state.copyWith(isLoading: false);
       update();
     }
