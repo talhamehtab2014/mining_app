@@ -76,13 +76,26 @@ class AuthService {
   }
 
   /// LOGIN
-  Future<User?> login({required String email, required String password}) async {
+  Future<Map<String, dynamic>?> login({required String email, required String password}) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email.trim(),
         password: password,
       );
-      return userCredential.user;
+
+      final user = userCredential.user;
+      if (user == null) return null;
+
+      final DataSnapshot snapshot =
+      await _dbRef.child('/${user.uid}').get();
+
+      if (snapshot.exists && snapshot.value is Map) {
+        // Convert Object? to Map<String, dynamic>
+        final data = Map<String, dynamic>.from(snapshot.value as Map);
+        return data;
+      } else {
+        return null;
+      }
     } on FirebaseAuthException catch (e) {
       throw e.message ?? 'Login failed';
     } catch (e) {

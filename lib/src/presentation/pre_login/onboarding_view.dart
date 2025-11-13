@@ -87,6 +87,7 @@ class OnboardingView extends StatelessWidget {
                                         isSelected:
                                             state == OnboardingStateEnum.login,
                                         onTap: () {
+                                          resetFields();
                                           controller.onAction(
                                             OnboardingAction.loginRadioButton(),
                                           );
@@ -99,6 +100,7 @@ class OnboardingView extends StatelessWidget {
                                         isSelected:
                                             state == OnboardingStateEnum.signup,
                                         onTap: () {
+                                          resetFields();
                                           controller.onAction(
                                             OnboardingAction.signupRadioButton(),
                                           );
@@ -236,13 +238,13 @@ class OnboardingView extends StatelessWidget {
       children: [
         CommonTextFieldWidget(
           labelText: AppStrings.emailLabel,
-          controller: TextEditingController(),
+          controller: emailController,
           hintText: AppStrings.emailHint,
         ),
         12.verticalSpace,
         CommonTextFieldWidget(
           labelText: AppStrings.passwordLabel,
-          controller: TextEditingController(),
+          controller: passwordController,
           hintText: AppStrings.passwordHint,
           isPassword: true,
         ),
@@ -250,7 +252,12 @@ class OnboardingView extends StatelessWidget {
         ButtonWithRadiusWidget(
           buttonTitle: AppStrings.loginWithEmail,
           callback: () {
-            controller.onAction(OnboardingAction.loginWithEmail());
+            controller.onAction(
+              OnboardingAction.loginWithEmail(
+                emailController.text,
+                passwordController.text,
+              ),
+            );
           },
           borderRadius: 6.r,
           iconWidget: FaIcon(FontAwesomeIcons.envelope),
@@ -314,5 +321,13 @@ class OnboardingView extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void resetFields() {
+    emailController.clear();
+    nameController.clear();
+    passwordController.clear();
+    phoneNumController.clear();
+    referralCodeController.clear();
   }
 }

@@ -5,6 +5,7 @@ import 'package:mining_application/src/core/services/auth_service/auth_service.d
 import 'package:mining_application/src/core/utils/routes.dart';
 import 'package:mining_application/src/domain/usecase/onboarding/onboarding_signin_usecase.dart';
 import 'package:mining_application/src/presentation/pre_login/models/actions/onboarding_action.dart';
+import 'package:mining_application/src/presentation/pre_login/models/login_request_model.dart';
 import 'package:mining_application/src/presentation/pre_login/models/signup_request_model.dart';
 import 'package:mining_application/src/presentation/pre_login/models/state/onboarding_state.dart';
 
@@ -73,7 +74,7 @@ class OnboardingViewModel extends GetxController {
 
   void _loginWithEmailAndPassword(String email, String password) async{
     try {
-      final res = await _onboardingSignInUseCase(reqModel);
+      final res = await _onboardingSignInUseCase(LoginRequestModel(strEmail: email, strPassword: password));
       print(res);
     } catch (e) {
       e.printError();
