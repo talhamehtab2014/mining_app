@@ -25,7 +25,7 @@ class GlobalDependencies extends Bindings {
       fenix: true,
     );
     Get.lazyPut<BottomNavigationViewModel>(
-      () => BottomNavigationViewModel(),
+      () => BottomNavigationViewModel(fetchLocalDataUseCase: sl.get()),
       fenix: true,
     );
     Get.lazyPut<HomeViewModel>(() => HomeViewModel(), fenix: true);

@@ -10,6 +10,7 @@ import 'package:mining_application/src/presentation/post_login/history/history.d
 import 'package:mining_application/src/presentation/post_login/home/home.dart';
 import 'package:mining_application/src/presentation/post_login/profile/profile.dart';
 import 'package:mining_application/src/presentation/post_login/reffrals/refferal.dart';
+import 'package:mining_application/src/presentation/side_effects/side_effects.dart';
 
 class BottomNavigationView extends StatefulWidget {
   static const String id = '/BottomNavigationView';
@@ -49,6 +50,16 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
         body: SafeArea(
           child: GetBuilder<BottomNavigationViewModel>(
             builder: (controller) {
+              final effect = controller.effect;
+
+              String title = 'User';
+              String balance = '0.0 AU';
+
+              if (effect is ShowUserNameTitle) {
+                title = effect.title;
+                balance = effect.balance;
+              }
+
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -56,25 +67,28 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CommonLabelTextWidget(
-                            text: AppStrings.title,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16.sp,
-                            textColor: R.palette.primary,
-                          ),
-                          6.verticalSpace,
-                          CommonLabelTextWidget(
-                            text: '${AppStrings.welcome} User',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14.sp,
-                            textColor: R.palette.yellow500,
-                          ),
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CommonLabelTextWidget(
+                              text: AppStrings.title,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16.sp,
+                              textColor: R.palette.primary,
+                            ),
+                            6.verticalSpace,
+                            CommonLabelTextWidget(
+                              text: '${AppStrings.welcome} $title',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14.sp,
+                              textColor: R.palette.yellow500,
+                            ),
+                          ],
+                        ),
                       ),
+                      8.horizontalSpace,
                       Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: 12.w,
@@ -97,7 +111,7 @@ class _BottomNavigationViewState extends State<BottomNavigationView> {
                               size: 18.sp,
                             ),
                             CommonLabelTextWidget(
-                              text: '0.00',
+                              text: balance,
                               fontWeight: FontWeight.w400,
                               fontSize: 14.sp,
                               textColor: R.palette.yellow500,

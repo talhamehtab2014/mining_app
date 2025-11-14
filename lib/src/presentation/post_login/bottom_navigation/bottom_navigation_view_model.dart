@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mining_application/src/core/enum/enums.dart';
+import 'package:mining_application/src/domain/usecase/post_login_usecase/fetch_local_data.dart';
 import 'package:mining_application/src/presentation/post_login/bottom_navigation/action/bottom_navigation_action.dart';
 import 'package:mining_application/src/presentation/post_login/bottom_navigation/model/bottom_navgation_item_model.dart';
 import 'package:mining_application/src/presentation/post_login/bottom_navigation/model/bottom_navigation_state.dart';
+import 'package:mining_application/src/presentation/side_effects/side_effects.dart';
 
 class BottomNavigationViewModel extends GetxController {
   int selectedIndex = 0;
@@ -28,15 +31,47 @@ class BottomNavigationViewModel extends GetxController {
       state: BottomNavigationState.settingsState(),
     ),
   ];
+  final FetchLocalDataUseCase _fetchLocalDataUseCase;
   BottomNavigationState _state = BottomNavigationState.homeState();
 
   BottomNavigationState get state => _state;
+
+  UiEffect? effect;
+
+  BottomNavigationViewModel({
+    required FetchLocalDataUseCase fetchLocalDataUseCase,
+  }) : _fetchLocalDataUseCase = fetchLocalDataUseCase;
+
+  void emitEffect(UiEffect newEffect) {
+    effect = newEffect;
+    update();
+  }
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     print('BottomNavigationViewModel initialized');
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _updateNameAndAmount();
+    });
+  }
+
+  _updateNameAndAmount() async {
+    try {
+      final res = await _fetchLocalDataUseCase([
+        LocalKeys.name,
+        LocalKeys.totalBalance,
+      ]);
+      emitEffect(
+        ShowUserNameTitle(
+          res[LocalKeys.name.name],
+          "${res[LocalKeys.totalBalance.name]} AU",
+        ),
+      );
+    } catch (e) {
+      e.printError();
+    }
   }
 
   void updateIndex(int index) {
@@ -73,4 +108,6 @@ class BottomNavigationViewModel extends GetxController {
     );
     update();
   }
+
+  void loadDataFromLocalStorage() {}
 }

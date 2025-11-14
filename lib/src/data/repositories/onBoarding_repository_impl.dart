@@ -52,25 +52,25 @@ class OnBoardingRepositoryImpl extends OnBoardingRepository {
       LocalKeys.referralCode.name,
       userData['referralCode'] ?? '',
     );
-    await _localCall.saveInt(
+    await _localCall.saveString(
       LocalKeys.totalBalance.name,
-      userData['totalBalance'] ?? 0,
+      '${userData['totalBalance'] ?? 0}',
     );
-    await _localCall.saveInt(
+    await _localCall.saveString(
       LocalKeys.totalSessions.name,
-      userData['totalSessions'] ?? 0,
+      '${userData['totalSessions'] ?? 0}',
     );
-    await _localCall.saveInt(
+    await _localCall.saveString(
       LocalKeys.totalReferrals.name,
-      userData['totalReferrals'] ?? 0,
+      '${userData['totalReferrals'] ?? 0}',
     );
-    await _localCall.saveInt(
+    await _localCall.saveString(
       LocalKeys.earnedFromReferrals.name,
-      userData['earnedFromReferrals'] ?? 0,
+      '${userData['earnedFromReferrals'] ?? 0}',
     );
     await _localCall.saveString(
       LocalKeys.userReferralCode.name,
-      userData['userReferralCode'] ?? '',
+      '${userData['userReferralCode'] ?? ''}',
     );
     await _localCall.saveString(
       LocalKeys.createdAt.name,
