@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:mining_application/src/core/enum/enums.dart';
 import 'package:mining_application/src/core/services/local/local_call.dart';
 import 'package:mining_application/src/core/usecase/usecase.dart';
 import 'package:mining_application/src/data/datasource/onboarding_datasource/onboarding_datasource.dart';
@@ -43,22 +44,37 @@ class OnBoardingRepositoryImpl extends OnBoardingRepository {
       return;
     }
 
-    await _localCall.saveString('uid', userData['uid'] ?? '');
-    await _localCall.saveString('name', userData['name'] ?? '');
-    await _localCall.saveString('email', userData['email'] ?? '');
-    await _localCall.saveString('phone', userData['phone'] ?? '');
-    await _localCall.saveString('referralCode', userData['referralCode'] ?? '');
-    await _localCall.saveInt('totalBalance', userData['totalBalance'] ?? 0);
-    await _localCall.saveInt('totalSessions', userData['totalSessions'] ?? 0);
-    await _localCall.saveInt('totalReferrals', userData['totalReferrals'] ?? 0);
+    await _localCall.saveString(LocalKeys.uid.name, userData['uid'] ?? '');
+    await _localCall.saveString(LocalKeys.name.name, userData['name'] ?? '');
+    await _localCall.saveString(LocalKeys.email.name, userData['email'] ?? '');
+    await _localCall.saveString(LocalKeys.phone.name, userData['phone'] ?? '');
+    await _localCall.saveString(
+      LocalKeys.referralCode.name,
+      userData['referralCode'] ?? '',
+    );
     await _localCall.saveInt(
-      'earnedFromReferrals',
+      LocalKeys.totalBalance.name,
+      userData['totalBalance'] ?? 0,
+    );
+    await _localCall.saveInt(
+      LocalKeys.totalSessions.name,
+      userData['totalSessions'] ?? 0,
+    );
+    await _localCall.saveInt(
+      LocalKeys.totalReferrals.name,
+      userData['totalReferrals'] ?? 0,
+    );
+    await _localCall.saveInt(
+      LocalKeys.earnedFromReferrals.name,
       userData['earnedFromReferrals'] ?? 0,
     );
     await _localCall.saveString(
-      'userReferralCode',
+      LocalKeys.userReferralCode.name,
       userData['userReferralCode'] ?? '',
     );
-    await _localCall.saveString('createdAt', userData['createdAt'] ?? '');
+    await _localCall.saveString(
+      LocalKeys.createdAt.name,
+      userData['createdAt'] ?? '',
+    );
   }
 }
