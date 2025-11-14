@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:mining_application/src/core/services/auth_service/auth_service.dart';
+import 'package:mining_application/src/core/services/auth_service/firebase_service.dart';
 import 'package:mining_application/src/core/usecase/usecase.dart';
 import 'package:mining_application/src/data/datasource/onboarding_datasource/onboarding_datasource.dart';
 import 'package:mining_application/src/presentation/pre_login/models/login_request_model.dart';
@@ -7,7 +7,7 @@ import 'package:mining_application/src/presentation/pre_login/models/signup_requ
 
 @LazySingleton(as: OnBoardingDataSource)
 class OnBoardingDataSourceImpl extends OnBoardingDataSource {
-  final AuthService authService;
+  final FirebaseService authService;
 
   OnBoardingDataSourceImpl({required this.authService});
 

@@ -1,12 +1,12 @@
 import 'package:injectable/injectable.dart';
-import 'package:mining_application/src/core/services/auth_service/auth_service.dart';
+import 'package:mining_application/src/core/services/auth_service/firebase_service.dart';
 import 'package:mining_application/src/data/datasource/profile_datasource/profile_datasource.dart';
 
 @LazySingleton(as: ProfileDataSource)
 class ProfileDataSourceImpl extends ProfileDataSource {
-  final AuthService _authService;
+  final FirebaseService _authService;
 
-  ProfileDataSourceImpl({required AuthService authService})
+  ProfileDataSourceImpl({required FirebaseService authService})
     : _authService = authService;
 
   @override
