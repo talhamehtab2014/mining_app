@@ -11,7 +11,7 @@ class BottomNavigationViewModel extends GetxController {
   int selectedIndex = 0;
   List<BottomNavigationItemModel> iconData = [
     BottomNavigationItemModel(
-      iconPath: Icons.home,
+      iconPath: Icons.home_outlined,
       action: BottomNavigationAction.homeAction(),
       state: BottomNavigationState.homeState(),
     ),

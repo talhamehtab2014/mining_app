@@ -1,21 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mining_application/src/core/di/di.dart';
+import 'package:mining_application/src/core/enum/enums.dart';
 import 'package:mining_application/src/core/services/theme_service/theme_service.dart';
+import 'package:mining_application/src/domain/usecase/post_login_usecase/fetch_local_data.dart';
+import 'package:mining_application/src/domain/usecase/profile/get_user_data.dart';
+import 'package:mining_application/src/domain/usecase/profile/update_data_usecase.dart';
 import 'package:mining_application/src/presentation/post_login/profile/models/action/profile_view_action.dart';
 import 'package:mining_application/src/presentation/post_login/profile/models/profile_model.dart';
 import 'package:mining_application/src/presentation/post_login/profile/models/state/profile_view_state.dart';
+import 'package:mining_application/src/presentation/side_effects/side_effects.dart';
 
 class ProfileViewModel extends GetxController {
+  final UpdateDataUseCase _updateDataUseCase;
+  final GetUserDataUseCase _getUserDataUseCase;
+  final FetchLocalDataUseCase _fetchLocalDataUseCase;
+  final ThemeService _themeService;
+
+  UiEffect? effect;
+
+  void emitEffect(UiEffect newEffect) {
+    effect = newEffect;
+    update();
+  }
+
   ProfileViewState _state = ProfileViewState.initial(
     ProfileModel(
       isProfileEdited: false,
-      username: 'John Doe',
-      email: 'dummy@gmail.com',
-      phoneNumber: '+1234567890',
+      username: '',
+      email: '',
+      phoneNumber: '',
       isDarkMode: false,
     ),
   );
+
+  ProfileViewModel({
+    required UpdateDataUseCase updateDataUseCase,
+    required GetUserDataUseCase getUserDataUseCase,
+    required FetchLocalDataUseCase fetchLocalDataUseCase,
+    required ThemeService themeService,
+  }) : _updateDataUseCase = updateDataUseCase,
+       _getUserDataUseCase = getUserDataUseCase,
+       _fetchLocalDataUseCase = fetchLocalDataUseCase,
+       _themeService = themeService;
 
   ProfileViewState get state => _state;
 
@@ -23,11 +49,39 @@ class ProfileViewModel extends GetxController {
     _state = value;
   }
 
+  initializeFields() async {
+    final localData = await _fetchLocalDataUseCase([
+      LocalKeys.name,
+      LocalKeys.email,
+      LocalKeys.phone,
+    ]);
+    _state = ProfileViewState.initial(
+      ProfileModel(
+        isLoading: false,
+        isProfileEdited: false,
+        username: localData[LocalKeys.name.name],
+        email: localData[LocalKeys.email.name],
+        phoneNumber: localData[LocalKeys.phone.name],
+        isDarkMode: _themeService.getTheme() == ThemeMode.dark,
+      ),
+    );
+    emitEffect(
+      UpdateFieldValues(
+        value1: _state.profileModel?.username,
+        value2: _state.profileModel?.email,
+        value3: _state.profileModel?.phoneNumber,
+      ),
+    );
+
+  }
+
+  _getUserData() {}
+
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    print("ProfileViewModel initialized");
+    initializeFields();
   }
 
   void onAction(ProfileViewAction action) {
@@ -41,10 +95,8 @@ class ProfileViewModel extends GetxController {
       },
       saveChanges: () {},
       toggleTheme: () async {
-        final themeService = sl.get<ThemeService>();
-
-        await themeService.setTheme(
-          themeService.getTheme() == ThemeMode.light
+        await _themeService.setTheme(
+          _themeService.getTheme() == ThemeMode.light
               ? ThemeMode.dark
               : ThemeMode.light,
         );
@@ -52,7 +104,7 @@ class ProfileViewModel extends GetxController {
         state.maybeMap(
           initial: (data) => _updateModel(
             (m) => m.copyWith(
-              isDarkMode: themeService.getTheme() == ThemeMode.dark,
+              isDarkMode: _themeService.getTheme() == ThemeMode.dark,
             ),
           ),
           orElse: () => state,

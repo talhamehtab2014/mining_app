@@ -7,38 +7,68 @@ import 'package:mining_application/src/core/utils/routes.dart';
 import 'package:mining_application/src/presentation/common_widgets/common_button_widget.dart';
 import 'package:mining_application/src/presentation/common_widgets/common_label_text_widget.dart';
 import 'package:mining_application/src/presentation/common_widgets/common_text_field_widget.dart';
+import 'package:mining_application/src/presentation/common_widgets/loading_overlay.dart';
 import 'package:mining_application/src/presentation/post_login/profile/models/action/profile_view_action.dart';
 import 'package:mining_application/src/presentation/post_login/profile/models/profile_model.dart';
 import 'package:mining_application/src/presentation/post_login/profile/models/state/profile_view_state.dart';
 import 'package:mining_application/src/presentation/post_login/profile/profile_view_model.dart';
+import 'package:mining_application/src/presentation/side_effects/side_effects.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget {
   static const String id = '/ProfileView';
 
-  const ProfileView({super.key});
+  ProfileView({super.key});
+
+  @override
+  State<ProfileView> createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+  final TextEditingController nameController = TextEditingController();
+
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileViewModel>(
       builder: (controller) {
-        return Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
-            child: controller.state.maybeWhen(
-              initial: (state) => Column(
-                children: [
-                  editProfileCard(context, controller, state),
-                  16.verticalSpace,
-                  darkLightSwitcher(context, state, controller),
-                  16.verticalSpace,
-                  profileTopHeaderCard(context),
-                  16.verticalSpace,
-                  logoutButton(context),
-                ],
+        final effect = controller.effect;
+
+        if (effect is UpdateFieldValues) {
+          nameController.text = effect.value1 ?? '';
+          emailController.text = effect.value2 ?? '';
+          phoneController.text = effect.value3 ?? '';
+        }
+
+        return controller.state.maybeWhen(
+          initial: (state) => LoadingOverlay(
+            isLoading: state?.isLoading ?? false,
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    editProfileCard(context, controller, state),
+                    16.verticalSpace,
+                    darkLightSwitcher(context, state, controller),
+                    16.verticalSpace,
+                    profileTopHeaderCard(context),
+                    16.verticalSpace,
+                    logoutButton(context),
+                  ],
+                ),
               ),
-              orElse: () => Container(),
             ),
           ),
+          orElse: () => Container(),
         );
       },
     );
@@ -112,23 +142,23 @@ class ProfileView extends StatelessWidget {
           16.verticalSpace,
           CommonTextFieldWidget(
             labelText: AppStrings.name,
-            controller: TextEditingController(text: '${state?.username}'),
+            controller: nameController,
             hintText: AppStrings.nameHint,
             isEnabled: state?.isProfileEdited ?? true,
           ),
           12.verticalSpace,
           CommonTextFieldWidget(
             labelText: AppStrings.emailLabel,
-            controller: TextEditingController(text: '${state?.email}'),
+            controller: emailController,
             hintText: AppStrings.emailHint,
-            isEnabled: state?.isProfileEdited ?? true,
+            isEnabled: false,
           ),
           12.verticalSpace,
           CommonTextFieldWidget(
             labelText: AppStrings.phone,
-            controller: TextEditingController(text: '${state?.phoneNumber}'),
+            controller: phoneController,
             hintText: AppStrings.phoneOptionalHint,
-            isEnabled: state?.isProfileEdited ?? true,
+            isEnabled: false,
           ),
         ],
       ),

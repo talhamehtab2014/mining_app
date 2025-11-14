@@ -28,9 +28,9 @@ class OnboardingView extends StatefulWidget {
 class _OnboardingViewState extends State<OnboardingView> {
   final TextEditingController nameController = TextEditingController();
 
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController emailController = TextEditingController(text: 'talhamehtab2016@gmail.com');
 
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController(text: '12341234');
 
   final TextEditingController phoneNumController = TextEditingController();
 

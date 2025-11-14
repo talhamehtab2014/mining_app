@@ -29,7 +29,15 @@ class GlobalDependencies extends Bindings {
       fenix: true,
     );
     Get.lazyPut<HomeViewModel>(() => HomeViewModel(), fenix: true);
-    Get.lazyPut<ProfileViewModel>(() => ProfileViewModel(), fenix: true);
+    Get.lazyPut<ProfileViewModel>(
+      () => ProfileViewModel(
+        updateDataUseCase: sl.get(),
+        getUserDataUseCase: sl.get(),
+        fetchLocalDataUseCase: sl.get(),
+        themeService: sl.get(),
+      ),
+      fenix: true,
+    );
     Get.lazyPut<ReferralViewModel>(() => ReferralViewModel(), fenix: true);
     Get.lazyPut<HistoryViewModel>(() => HistoryViewModel(), fenix: true);
   }

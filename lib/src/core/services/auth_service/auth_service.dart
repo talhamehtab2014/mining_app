@@ -30,8 +30,8 @@ class AuthService {
 
       // Interactive authentication
       // NOTE: make it nullable so we can detect cancel
-      final GoogleSignInAccount? googleUser =
-      await _googleSignIn.authenticate(); // or .signIn() depending on your setup
+      final GoogleSignInAccount? googleUser = await _googleSignIn
+          .authenticate(); // or .signIn() depending on your setup
 
       // User cancelled the Google picker
       if (googleUser == null) {
@@ -39,7 +39,7 @@ class AuthService {
       }
 
       final GoogleSignInAuthentication googleAuth =
-      await googleUser.authentication;
+          await googleUser.authentication;
 
       // google_sign_in ^7 often only has idToken, which is enough
       final OAuthCredential credential = GoogleAuthProvider.credential(
@@ -47,12 +47,12 @@ class AuthService {
         // accessToken: googleAuth.accessToken, // optional / may be null
       );
 
-      final UserCredential userCredential =
-      await _auth.signInWithCredential(credential);
+      final UserCredential userCredential = await _auth.signInWithCredential(
+        credential,
+      );
 
       final User? user = userCredential.user;
       if (user == null) return null;
-
 
       final snapshot = await _dbRef.get();
       Map<String, dynamic> userData;
@@ -77,9 +77,7 @@ class AuthService {
         await _dbRef.set(userData);
       } else {
         // Existing user – update some fields
-        await _dbRef.update({
-          'name': user.displayName ?? '',
-        });
+        await _dbRef.update({'name': user.displayName ?? ''});
 
         // Start from existing data
         final existing = snapshot.value as Map<dynamic, dynamic>;
@@ -129,7 +127,10 @@ class AuthService {
   }
 
   /// LOGIN
-  Future<Map<String, dynamic>?> login({required String email, required String password}) async {
+  Future<Map<String, dynamic>?> login({
+    required String email,
+    required String password,
+  }) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email.trim(),
@@ -139,8 +140,7 @@ class AuthService {
       final user = userCredential.user;
       if (user == null) return null;
 
-      final DataSnapshot snapshot =
-      await _dbRef.child('/${user.uid}').get();
+      final DataSnapshot snapshot = await _dbRef.child('/${user.uid}').get();
 
       if (snapshot.exists && snapshot.value is Map) {
         // Convert Object? to Map<String, dynamic>
@@ -202,6 +202,21 @@ class AuthService {
       throw e.message ?? 'Signup failed';
     } catch (e) {
       throw 'Signup failed: $e';
+    }
+  }
+
+  Future<Map<String, dynamic>?> getUserById(String userId) async {
+    try {
+      final snapshot = await _dbRef.child(userId).get();
+
+      if (snapshot.exists) {
+        return Map<String, dynamic>.from(snapshot.value as Map);
+      } else {
+        print('User not found for id: $userId');
+        return null;
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 }

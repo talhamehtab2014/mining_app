@@ -53,7 +53,7 @@ class Routes {
     ),
     GetPage(
       name: ProfileView.id,
-      page: () => const ProfileView(),
+      page: () => ProfileView(),
       transition: Transition.cupertino,
     ),
     GetPage(

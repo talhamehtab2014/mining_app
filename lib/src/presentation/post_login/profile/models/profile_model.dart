@@ -6,6 +6,7 @@ part 'profile_model.freezed.dart';
 abstract class ProfileModel with _$ProfileModel {
 
   const factory ProfileModel({
+    bool? isLoading,
     bool? isProfileEdited,
     bool? isDarkMode,
     String? username,
