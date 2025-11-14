@@ -18,4 +18,5 @@ abstract class OnboardingAction with _$OnboardingAction {
   ) = SignupWithEmail;
 
   const factory OnboardingAction.loginWithEmail(String email, String password) = LoginWithEmail;
+  const factory OnboardingAction.updateUseEffectState() = UpdateUseEffect;
 }

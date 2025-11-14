@@ -12,18 +12,50 @@ import 'package:mining_application/src/presentation/common_widgets/loading_overl
 import 'package:mining_application/src/presentation/pre_login/models/signup_request_model.dart';
 import 'package:mining_application/src/presentation/pre_login/models/state/onboarding_state.dart';
 import 'package:mining_application/src/presentation/pre_login/onboarding_view_model.dart';
+import 'package:mining_application/src/presentation/side_effects/side_effects.dart';
 
 import 'models/actions/onboarding_action.dart';
 
-class OnboardingView extends StatelessWidget {
+class OnboardingView extends StatefulWidget {
   static const String id = '/OnboardingView';
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController phoneNumController = TextEditingController();
-  final TextEditingController referralCodeController = TextEditingController();
 
   OnboardingView({super.key});
+
+  @override
+  State<OnboardingView> createState() => _OnboardingViewState();
+}
+
+class _OnboardingViewState extends State<OnboardingView> {
+  final TextEditingController nameController = TextEditingController();
+
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController passwordController = TextEditingController();
+
+  final TextEditingController phoneNumController = TextEditingController();
+
+  final TextEditingController referralCodeController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final controller = Get.find<OnboardingViewModel>();
+    ever<UiEffect?>(controller.rxEffect, (effect) {
+      if (effect is ShowError) {
+        Get.snackbar(
+          effect.title,
+          effect.message,
+          snackPosition: SnackPosition.TOP,
+          duration: const Duration(seconds: 3),
+          backgroundColor: R.palette.red600,
+          colorText: R.palette.white
+        );
+
+        controller.onAction(OnboardingAction.updateUseEffectState());
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,22 +192,22 @@ class OnboardingView extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        8.horizontalSpace,
-                                        Expanded(
-                                          child: ButtonWithRadiusWidget(
-                                            buttonTitle: AppStrings.phone,
-                                            callback: () {
-                                              controller.onAction(
-                                                OnboardingAction.loginWithPhone(),
-                                              );
-                                            },
-                                            borderRadius: 6.r,
-                                            iconWidget: FaIcon(
-                                              FontAwesomeIcons.phone,
-                                              size: 16,
-                                            ),
-                                          ),
-                                        ),
+                                        // 8.horizontalSpace,
+                                        // Expanded(
+                                        //   child: ButtonWithRadiusWidget(
+                                        //     buttonTitle: AppStrings.phone,
+                                        //     callback: () {
+                                        //       controller.onAction(
+                                        //         OnboardingAction.loginWithPhone(),
+                                        //       );
+                                        //     },
+                                        //     borderRadius: 6.r,
+                                        //     iconWidget: FaIcon(
+                                        //       FontAwesomeIcons.phone,
+                                        //       size: 16,
+                                        //     ),
+                                        //   ),
+                                        // ),
                                       ],
                                     ),
                                   ],

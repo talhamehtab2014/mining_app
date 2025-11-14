@@ -8,6 +8,7 @@ import 'package:mining_application/src/presentation/pre_login/models/actions/onb
 import 'package:mining_application/src/presentation/pre_login/models/login_request_model.dart';
 import 'package:mining_application/src/presentation/pre_login/models/signup_request_model.dart';
 import 'package:mining_application/src/presentation/pre_login/models/state/onboarding_state.dart';
+import 'package:mining_application/src/presentation/side_effects/side_effects.dart';
 
 import '../../domain/usecase/onboarding/onboarding_signup_usecase.dart';
 
@@ -21,6 +22,8 @@ class OnboardingViewModel extends GetxController {
     OnboardingStateEnum.login,
     false,
   );
+
+  final rxEffect = Rxn<UiEffect>();
 
   OnBoardingState get state => _state;
 
@@ -41,7 +44,6 @@ class OnboardingViewModel extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    print("OnboardingViewModel Created.");
   }
 
   Future<void> onAction(OnboardingAction action) async {
@@ -60,6 +62,9 @@ class OnboardingViewModel extends GetxController {
       },
       signupWithEmail: _signUpWithEmailAndPassword,
       loginWithEmail: _loginWithEmailAndPassword,
+      updateUseEffectState: () {
+        rxEffect.value = null;
+      },
     );
   }
 
@@ -75,11 +80,9 @@ class OnboardingViewModel extends GetxController {
       }
     } catch (e) {
       e.printError();
-      Get.snackbar(
-        "Google Sign-In failed",
+      rxEffect.value = ShowError(
+        "Google Sign-in/Sign-Up failed",
         e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 3),
       );
     } finally {
       _state = state.copyWith(isLoading: false);
@@ -88,6 +91,20 @@ class OnboardingViewModel extends GetxController {
   }
 
   void _loginWithEmailAndPassword(String email, String password) async {
+    if (email.isEmpty) {
+      rxEffect.value = ShowError(
+        'Email is Required',
+        'Please enter your email!',
+      );
+      return;
+    } else if (password.isEmpty) {
+      rxEffect.value = ShowError(
+        'Password is Required',
+        'Please enter your password!',
+      );
+      return;
+    }
+
     _state = state.copyWith(isLoading: true);
     update();
     try {
@@ -99,11 +116,9 @@ class OnboardingViewModel extends GetxController {
       }
     } catch (e) {
       e.printError();
-      Get.snackbar(
-        "Sign-In failed",
+      rxEffect.value = ShowError(
+        "Login failed",
         e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 3),
       );
     } finally {
       _state = state.copyWith(isLoading: false);
@@ -112,18 +127,36 @@ class OnboardingViewModel extends GetxController {
   }
 
   void _signUpWithEmailAndPassword(SignupRequestModel reqModel) async {
+
+    if (reqModel.strName.isEmpty) {
+      rxEffect.value = ShowError(
+        'Name is Required',
+        'Please enter your name!',
+      );
+      return;
+    } else if (reqModel.strPassword.isEmpty) {
+      rxEffect.value = ShowError(
+        'Password is Required',
+        'Please enter your password!',
+      );
+      return;
+    } else if (reqModel.strEmail.isEmpty) {
+      rxEffect.value = ShowError(
+        'Email is Required',
+        'Please enter your email!',
+      );
+      return;
+    }
     _state = state.copyWith(isLoading: true);
     update();
     try {
       final res = await _onboardingSignUpUseCase(reqModel);
-      print(res);
+
     } catch (e) {
       e.printError();
-      Get.snackbar(
+      rxEffect.value = ShowError(
         "Sign-up failed",
         e.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 3),
       );
     } finally {
       _state = state.copyWith(isLoading: false);
