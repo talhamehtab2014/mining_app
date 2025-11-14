@@ -65,4 +65,41 @@ class LocalCallImp implements LocalCall {
   Future<void> clear() async {
     await _preferences.clear();
   }
+
+  @override
+  Future<void> saveUserToLocal(Map<String, dynamic>? userData) async {
+    if (userData == null) {
+      return;
+    }
+
+    await saveString(LocalKeys.uid.name, userData['uid'] ?? '');
+    await saveString(LocalKeys.name.name, userData['name'] ?? '');
+    await saveString(LocalKeys.email.name, userData['email'] ?? '');
+    await saveString(LocalKeys.phone.name, userData['phone'] ?? '');
+    await saveString(
+      LocalKeys.referralCode.name,
+      userData['referralCode'] ?? '',
+    );
+    await saveString(
+      LocalKeys.totalBalance.name,
+      '${userData['totalBalance'] ?? 0}',
+    );
+    await saveString(
+      LocalKeys.totalSessions.name,
+      '${userData['totalSessions'] ?? 0}',
+    );
+    await saveString(
+      LocalKeys.totalReferrals.name,
+      '${userData['totalReferrals'] ?? 0}',
+    );
+    await saveString(
+      LocalKeys.earnedFromReferrals.name,
+      '${userData['earnedFromReferrals'] ?? 0}',
+    );
+    await saveString(
+      LocalKeys.userReferralCode.name,
+      '${userData['userReferralCode'] ?? ''}',
+    );
+    await saveString(LocalKeys.createdAt.name, userData['createdAt'] ?? '');
+  }
 }

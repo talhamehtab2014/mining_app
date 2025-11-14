@@ -87,6 +87,8 @@ class FirebaseService {
         };
       }
 
+      userData.putIfAbsent('uid', () => user.uid);
+
       // ✅ RETURN DB DATA, NOT CREDENTIALS
       return userData;
     } on FirebaseAuthException catch (e) {
@@ -145,6 +147,7 @@ class FirebaseService {
       if (snapshot.exists && snapshot.value is Map) {
         // Convert Object? to Map<String, dynamic>
         final data = Map<String, dynamic>.from(snapshot.value as Map);
+        data.putIfAbsent('uid', () => user.uid);
         return data;
       } else {
         return null;
@@ -196,6 +199,8 @@ class FirebaseService {
       // 3) Optionally update displayName
       await user.updateDisplayName(name);
 
+      userData.putIfAbsent('uid', () => user.uid);
+
       return userData;
     } on FirebaseAuthException catch (e) {
       // handle Firebase specific errors
@@ -215,6 +220,45 @@ class FirebaseService {
         print('User not found for id: $userId');
         return null;
       }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// Update user by userId
+  Future<Map<String, dynamic>?> updateUserById(
+    String userId, {
+    String? name,
+    String? email,
+    int? age,
+    String? phone,
+  }) async {
+    try {
+      // Only send the fields that are not null
+      final Map<String, dynamic> updates = {};
+
+      if (name != null) updates['name'] = name;
+      if (email != null) updates['email'] = email;
+      if (phone != null) updates['phone'] = phone;
+
+      if (updates.isEmpty) {
+        return null;
+      }
+
+      await _dbRef.child(userId).update(updates);
+
+      // 2) Read back updated user
+      final DataSnapshot snapshot = await _dbRef.child(userId).get();
+
+      if (!snapshot.exists || snapshot.value == null) {
+        return null;
+      }
+
+      var userData = Map<String, dynamic>.from(snapshot.value as Map);
+
+      userData.putIfAbsent('uid', () => userId);
+
+      return userData;
     } catch (e) {
       rethrow;
     }

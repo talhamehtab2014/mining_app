@@ -118,7 +118,13 @@ class _ProfileViewState extends State<ProfileView> {
                         actionButtons(
                           false,
                           AppStrings.save,
-                          () {},
+                          () {
+                            controller.onAction(
+                              ProfileViewAction.saveChanges(
+                                name: nameController.text,
+                              ),
+                            );
+                          },
                           Theme.of(context).colorScheme.secondary,
                           Theme.of(context).colorScheme.tertiary,
                         ),

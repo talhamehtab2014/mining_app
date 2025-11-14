@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:mining_application/src/core/enum/enums.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'local_call_impl.dart';
@@ -101,4 +102,6 @@ abstract class LocalCall {
   ///
   /// - Returns: A [Future] that completes when the operation is finished.
   Future<void> clear();
+
+  Future<void> saveUserToLocal(Map<String, dynamic>? userData);
 }

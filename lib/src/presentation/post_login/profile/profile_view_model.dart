@@ -72,7 +72,6 @@ class ProfileViewModel extends GetxController {
         value3: _state.profileModel?.phoneNumber,
       ),
     );
-
   }
 
   _getUserData() {}
@@ -93,7 +92,7 @@ class ProfileViewModel extends GetxController {
           orElse: () => state,
         );
       },
-      saveChanges: () {},
+
       toggleTheme: () async {
         await _themeService.setTheme(
           _themeService.getTheme() == ThemeMode.light
@@ -111,8 +110,40 @@ class ProfileViewModel extends GetxController {
         );
       },
       logout: () {},
+      saveChanges: _updateUserData,
     );
     update();
+  }
+
+  _updateUserData(String? name, String? email, String? phoneNo) async {
+    state.maybeMap(
+      initial: (data) => _updateModel((m) => m.copyWith(isLoading: true)),
+      orElse: () => state,
+    );
+    update();
+    try {
+      var data = await _fetchLocalDataUseCase([LocalKeys.uid]);
+      var res = await _updateDataUseCase(
+        UpdateDataUseCaseParams(data[LocalKeys.uid.name], name: name),
+      );
+      emitEffect(
+        UpdateFieldValues(
+          value1: res?[LocalKeys.name.name],
+          value2: res?[LocalKeys.email.name],
+          value3: res?[LocalKeys.phone.name],
+        ),
+      );
+    } catch (e) {
+      e.printError();
+    } finally {
+      state.maybeMap(
+        initial: (data) => _updateModel(
+          (m) => m.copyWith(isLoading: false, isProfileEdited: false),
+        ),
+        orElse: () => state,
+      );
+      update();
+    }
   }
 
   void _updateModel(ProfileModel Function(ProfileModel) transform) {

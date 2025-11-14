@@ -1,5 +1,4 @@
 import 'package:injectable/injectable.dart';
-import 'package:mining_application/src/core/enum/enums.dart';
 import 'package:mining_application/src/core/services/local/local_call.dart';
 import 'package:mining_application/src/core/usecase/usecase.dart';
 import 'package:mining_application/src/data/datasource/onboarding_datasource/onboarding_datasource.dart';
@@ -21,60 +20,21 @@ class OnBoardingRepositoryImpl extends OnBoardingRepository {
   @override
   Future signIn(LoginRequestModel params) async {
     final result = await _onBoardingDataSource.signIn(params);
-    await _saveUserToLocal(result);
+    await _localCall.saveUserToLocal(result);
     return result;
   }
 
   @override
   Future signUp(SignupRequestModel params) async {
     final result = await _onBoardingDataSource.signUp(params);
-    await _saveUserToLocal(result);
+    await _localCall.saveUserToLocal(result);
     return result;
   }
 
   @override
   Future<Map<String, dynamic>?> signUpWithGoogle(NoParams params) async {
     final result = await _onBoardingDataSource.signUpWithGoogle(params);
-    await _saveUserToLocal(result);
+    await _localCall.saveUserToLocal(result);
     return result;
-  }
-
-  Future<void> _saveUserToLocal(Map<String, dynamic>? userData) async {
-    if (userData == null) {
-      return;
-    }
-
-    await _localCall.saveString(LocalKeys.uid.name, userData['uid'] ?? '');
-    await _localCall.saveString(LocalKeys.name.name, userData['name'] ?? '');
-    await _localCall.saveString(LocalKeys.email.name, userData['email'] ?? '');
-    await _localCall.saveString(LocalKeys.phone.name, userData['phone'] ?? '');
-    await _localCall.saveString(
-      LocalKeys.referralCode.name,
-      userData['referralCode'] ?? '',
-    );
-    await _localCall.saveString(
-      LocalKeys.totalBalance.name,
-      '${userData['totalBalance'] ?? 0}',
-    );
-    await _localCall.saveString(
-      LocalKeys.totalSessions.name,
-      '${userData['totalSessions'] ?? 0}',
-    );
-    await _localCall.saveString(
-      LocalKeys.totalReferrals.name,
-      '${userData['totalReferrals'] ?? 0}',
-    );
-    await _localCall.saveString(
-      LocalKeys.earnedFromReferrals.name,
-      '${userData['earnedFromReferrals'] ?? 0}',
-    );
-    await _localCall.saveString(
-      LocalKeys.userReferralCode.name,
-      '${userData['userReferralCode'] ?? ''}',
-    );
-    await _localCall.saveString(
-      LocalKeys.createdAt.name,
-      userData['createdAt'] ?? '',
-    );
   }
 }

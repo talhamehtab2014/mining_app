@@ -6,7 +6,9 @@ part 'profile_view_action.freezed.dart';
 abstract class ProfileViewAction with _$ProfileViewAction {
   const factory ProfileViewAction.editProfile(bool isEditable) = EditProfileAction;
 
-  const factory ProfileViewAction.saveChanges() = SaveChangesAction;
+  const factory ProfileViewAction.saveChanges(
+      {String? name, String? email, String? phoneNo}) = SaveChangesAction;
+
 
   const factory ProfileViewAction.toggleTheme() = ToggleThemeAction;
 
