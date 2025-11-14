@@ -80,10 +80,7 @@ class OnboardingViewModel extends GetxController {
       }
     } catch (e) {
       e.printError();
-      rxEffect.value = ShowError(
-        "Google Sign-in/Sign-Up failed",
-        e.toString(),
-      );
+      rxEffect.value = ShowError("Google Sign-in/Sign-Up failed", e.toString());
     } finally {
       _state = state.copyWith(isLoading: false);
       update();
@@ -116,10 +113,7 @@ class OnboardingViewModel extends GetxController {
       }
     } catch (e) {
       e.printError();
-      rxEffect.value = ShowError(
-        "Login failed",
-        e.toString(),
-      );
+      rxEffect.value = ShowError("Login failed", e.toString());
     } finally {
       _state = state.copyWith(isLoading: false);
       update();
@@ -127,12 +121,8 @@ class OnboardingViewModel extends GetxController {
   }
 
   void _signUpWithEmailAndPassword(SignupRequestModel reqModel) async {
-
     if (reqModel.strName.isEmpty) {
-      rxEffect.value = ShowError(
-        'Name is Required',
-        'Please enter your name!',
-      );
+      rxEffect.value = ShowError('Name is Required', 'Please enter your name!');
       return;
     } else if (reqModel.strPassword.isEmpty) {
       rxEffect.value = ShowError(
@@ -151,13 +141,12 @@ class OnboardingViewModel extends GetxController {
     update();
     try {
       final res = await _onboardingSignUpUseCase(reqModel);
-
+      if (res != null) {
+        Get.offAndToNamed(Routes().getBottomNavigationPage());
+      }
     } catch (e) {
       e.printError();
-      rxEffect.value = ShowError(
-        "Sign-up failed",
-        e.toString(),
-      );
+      rxEffect.value = ShowError("Sign-up failed", e.toString());
     } finally {
       _state = state.copyWith(isLoading: false);
       update();
